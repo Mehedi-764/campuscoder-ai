@@ -10,7 +10,7 @@ def register(request):
         email = request.POST['email']
         password = request.POST['password']
 
-        allowed_domains = ['diu.edu.bd']
+        allowed_domains = ['manarat.ac.bd']
 
         email_domain = email.split('@')[-1]
 
@@ -20,14 +20,21 @@ def register(request):
                 'error': 'Only university email allowed!'
             })
 
+        # Check existing username
+
+        if User.objects.filter(username=username).exists():
+
+         return render(request, 'users/register.html', {
+         'error': 'Username already exists!'})
+
+        # Create user
         user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
-        )
+          username=username,
+          email=email,
+          password=password)
 
         # Admin approval required
-        user.is_active = False
+        user.is_active = True
         user.save()
 
         return redirect('login')

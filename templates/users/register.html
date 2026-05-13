@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div class="flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+
+        <h2 class="text-3xl font-bold text-center mb-6">
+            Student Registration
+        </h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% if error %}
+              <p class="text-red-500 mb-4">
+                {{ error }}
+              </p>
+            {% endif %}
+
+            <input type="text"
+                   name="username"
+                   placeholder="Username"
+                   class="w-full p-3 border rounded mb-4"
+                   required>
+
+            <input type="email"
+                   name="email"
+                   placeholder="University Email"
+                   class="w-full p-3 border rounded mb-4"
+                   required>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Password"
+                   class="w-full p-3 border rounded mb-4"
+                   required>
+
+            <button type="submit"
+                    class="w-full bg-blue-500 text-white p-3 rounded">
+                Register
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

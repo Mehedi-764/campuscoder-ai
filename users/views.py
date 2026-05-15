@@ -1,10 +1,92 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from groq import Groq
+
+from django.conf import settings
+
+from users.models import AIQuery
+
+client = Groq(
+    api_key=settings.GROQ_API_KEY
+)
 
 def home(request):
 
     return render(request, 'users/home.html')
+
+def assistant(request):
+
+    if not request.user.is_authenticated:
+
+        return redirect('login')
+
+    response = None
+
+    if request.method == 'POST':
+
+        prompt = request.POST.get('prompt')
+
+        language = request.POST.get('language')
+
+        full_prompt = f"""
+You are an expert AI Coding Mentor for university students.
+
+Selected Programming Language:
+{language}
+
+Your tasks:
+- Find coding errors
+- Explain bugs clearly
+- Generate correct code
+- Explain output
+- Teach step-by-step
+- Use beginner friendly explanations
+
+Student Request:
+{prompt}
+
+IMPORTANT:
+Generate code and explanations specifically in {language}.
+IMPORTANT:
+Always return code inside markdown code blocks.
+
+Example:
+
+```python
+print("Hello")
+```
+"""
+
+        try:
+
+            chat_completion = client.chat.completions.create(
+
+                messages=[
+                    {
+                        "role": "user",
+                        "content": full_prompt
+                    }
+                ],
+
+                model="llama-3.3-70b-versatile",
+            )
+
+            response = chat_completion.choices[0].message.content
+
+            AIQuery.objects.create(
+                user=request.user,
+                prompt=prompt,
+                response=response
+            )
+
+        except Exception as e:
+
+            response = f"AI Error: {str(e)}"
+
+    return render(request, 'users/assistant.html', {
+        'response': response
+    })
 
 def register(request):
 

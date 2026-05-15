@@ -11,6 +11,20 @@ client = Groq(
     api_key=settings.GROQ_API_KEY
 )
 
+def history(request):
+
+    if not request.user.is_authenticated:
+
+        return redirect('login')
+
+    chats = AIQuery.objects.filter(
+        user=request.user
+    ).order_by('-created_at')
+
+    return render(request, 'users/history.html', {
+        'chats': chats
+    })
+
 def home(request):
 
     return render(request, 'users/home.html')

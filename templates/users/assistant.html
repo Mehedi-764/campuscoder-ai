@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>AI Assistant</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Prism CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+</head>
+
+<body class="bg-black text-white min-h-screen p-10">
+
+<h1 class="text-5xl font-bold mb-8 text-cyan-400">
+    CampusCoder AI
+</h1>
+
+<form method="POST" class="mb-8">
+
+    {% csrf_token %}
+
+    <textarea
+        name="prompt"
+        rows="5"
+        placeholder="Ask coding question..."
+        class="w-full p-4 rounded bg-gray-900 border border-cyan-500 text-white"
+    ></textarea>
+
+    <button
+        type="submit"
+        class="mt-4 bg-cyan-500 px-6 py-3 rounded-lg font-bold">
+
+        Generate Response
+
+    </button>
+
+</form>
+
+{% if response %}
+
+<div class="bg-gray-900 p-6 rounded-lg border border-cyan-500 relative">
+
+    <button
+        onclick="copyCode()"
+        class="absolute top-4 right-4 bg-purple-600 px-4 py-2 rounded">
+
+        Copy
+
+    </button>
+
+<pre><code id="code" class="language-python">
+{{ response }}
+</code></pre>
+
+</div>
+
+{% endif %}
+
+<script>
+
+function copyCode() {
+
+    let code = document.getElementById("code").innerText;
+
+    navigator.clipboard.writeText(code);
+
+    alert("Code copied!");
+}
+
+</script>
+
+<!-- Prism JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+</body>
+</html>

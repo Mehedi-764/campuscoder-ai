@@ -20,11 +20,25 @@
 <form method="POST" class="mb-8">
 
     {% csrf_token %}
+<select
+    name="language"
+    class="w-full p-3 rounded bg-gray-900 border border-cyan-500 text-white mb-4">
 
+    <option value="C">C</option>
+
+    <option value="C++">C++</option>
+
+    <option value="Python">Python</option>
+
+    <option value="Java">Java</option>
+
+    <option value="JavaScript">JavaScript</option>
+
+</select>
     <textarea
         name="prompt"
         rows="5"
-        placeholder="Ask coding question..."
+        placeholder="Ask coding questions or paste your code for debugging..."
         class="w-full p-4 rounded bg-gray-900 border border-cyan-500 text-white"
     ></textarea>
 
@@ -72,7 +86,22 @@ function copyCode() {
 </script>
 
 <!-- Prism JS -->
+<!-- Prism JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+
+<script>
+
+    Prism.highlightAll();
+
+</script>
 
 </body>
 </html>

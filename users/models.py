@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 class AIQuery(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    language = models.CharField(max_length=50)
 
     prompt = models.TextField()
 

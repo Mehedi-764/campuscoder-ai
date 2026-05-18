@@ -90,6 +90,7 @@ print("Hello")
 
             AIQuery.objects.create(
                 user=request.user,
+                language=language,
                 prompt=prompt,
                 response=response
             )

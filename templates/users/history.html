@@ -1,42 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
-    <title>Chat History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Chat History</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
-<body class="bg-black text-white p-10">
+<body class="bg-black text-white min-h-screen p-10">
 
-<h1 class="text-4xl font-bold mb-8">
-    Previous Chats
-</h1>
+    <h1 class="text-5xl font-bold text-cyan-400 mb-10">
+        AI Chat History
+    </h1>
 
-{% for chat in chats %}
+    {% if chats %}
 
-<div class="bg-gray-900 p-6 rounded-lg mb-6">
+        {% for chat in chats %}
 
-    <h2 class="text-cyan-400 font-bold mb-2">
-        Prompt:
-    </h2>
+        <div class="bg-gray-900 border border-cyan-500 rounded-xl p-6 mb-8 shadow-lg">
 
-    <p class="mb-4">
-        {{ chat.prompt }}
-    </p>
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-4">
 
-    <h2 class="text-purple-400 font-bold mb-2">
-        Response:
-    </h2>
+                <h2 class="text-cyan-400 text-2xl font-bold">
+                    Prompt
+                </h2>
 
-    <pre class="whitespace-pre-wrap">
-{{ chat.response }}
-    </pre>
+                <span class="bg-cyan-500 text-black px-4 py-1 rounded-full text-sm font-bold">
 
-</div>
+                    {{ chat.language }}
 
-{% endfor %}
+                </span>
+
+            </div>
+
+            <!-- Prompt -->
+            <div class="bg-black p-4 rounded-lg mb-6 border border-gray-700">
+
+                <p class="whitespace-pre-wrap text-gray-300">
+                    {{ chat.prompt }}
+                </p>
+
+            </div>
+
+            <!-- Response Title -->
+            <h2 class="text-purple-400 text-2xl font-bold mb-4">
+                AI Response
+            </h2>
+
+            <!-- Response -->
+            <div class="bg-black p-4 rounded-lg border border-gray-700 overflow-x-auto">
+
+                <div class="whitespace-pre-wrap text-gray-300">
+
+                    {{ chat.response|safe }}
+
+                </div>
+
+            </div>
+
+            <!-- Time -->
+            <p class="text-gray-500 text-sm mt-5">
+
+                {{ chat.created_at }}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="bg-gray-900 p-8 rounded-xl border border-cyan-500">
+
+            <p class="text-gray-400 text-lg">
+                No chat history found.
+            </p>
+
+        </div>
+
+    {% endif %}
 
 </body>
+
 </html>

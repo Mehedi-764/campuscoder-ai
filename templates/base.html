@@ -1,18 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>CampusCoder AI</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Prism Theme -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css" rel="stylesheet"/>
+
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-black text-white">
 
-    <h1 class="text-4xl text-center mt-10 font-bold">
-        CampusCoder AI
-    </h1>
+<div class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-72 bg-gray-950 border-r border-cyan-500 p-6">
+
+        <h1 class="text-3xl font-extrabold mb-10
+        bg-gradient-to-r from-cyan-400 to-purple-500
+        text-transparent bg-clip-text">
+
+            CampusCoder AI
+
+        </h1>
+
+        <nav class="space-y-4">
+
+            <a href="/dashboard/"
+               class="block bg-cyan-500 hover:bg-cyan-600
+               transition p-4 rounded-lg font-bold">
+
+                🏠 Dashboard
+
+            </a>
+
+            <a href="/assistant/"
+               class="block bg-gray-900 hover:bg-gray-800
+               transition p-4 rounded-lg">
+
+                🤖 AI Assistant
+
+            </a>
+
+            <a href="/history/"
+               class="block bg-gray-900 hover:bg-gray-800
+               transition p-4 rounded-lg">
+
+                🕘 Chat History
+
+            </a>
+
+            <a href="#"
+               class="block bg-gray-900 hover:bg-gray-800
+               transition p-4 rounded-lg">
+
+                ⭐ Favorites
+
+            </a>
+
+            <a href="/logout/"
+               class="block bg-red-600 hover:bg-red-700
+               transition p-4 rounded-lg font-bold">
+
+                🚪 Logout
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-10">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</div>
 
 </body>
+
 </html>

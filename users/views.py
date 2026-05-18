@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from groq import Groq
+from django.db.models import Count
 
 from django.conf import settings
 
@@ -177,7 +178,29 @@ def dashboard(request):
 
         return redirect('login')
 
-    return render(request, 'users/dashboard.html')
+    total_prompts = AIQuery.objects.filter(
+        user=request.user
+    ).count()
+
+    most_used = AIQuery.objects.filter(
+        user=request.user
+    ).values('language').annotate(
+        total=Count('language')
+    ).order_by('-total').first()
+
+    most_used_language = (
+        most_used['language']
+        if most_used
+        else 'No Data'
+    )
+
+    return render(request, 'users/dashboard.html', {
+
+        'total_prompts': total_prompts,
+
+        'most_used_language': most_used_language
+
+    })
 
 
 def logout_view(request):

@@ -9,6 +9,7 @@ from django.db.models.functions import TruncDate
 from django.conf import settings
 from users.models import AIQuery
 
+
 client = Groq(
     api_key=settings.GROQ_API_KEY
 )
@@ -45,74 +46,151 @@ def assistant(request):
 
         language = request.POST.get('language')
 
-        full_prompt = f"""
-You are an expert AI Coding Mentor for university students.
+        action = request.POST.get('action')
 
-Selected Programming Language:
-{language}
 
-Your tasks:
-- Find coding errors
-- Explain bugs clearly
-- Generate correct code
+        #
+        # SMART AI ACTION SYSTEM
+        #
+
+        if action == "generate":
+
+            full_prompt = f"""
+        You are an expert coding mentor.
+
+        Generate clean {language} code.
+
+        Student Request:
+
+        {prompt}
+
+       Requirements:
+
+    - Write clean code
+    - Add comments
+    - Beginner friendly
+    - Explain output
+    - Follow best practices
+
+    Always return code inside markdown code block.
+  """
+
+            activity_text = f"{language} Code Generated"
+
+
+        elif action == "explain":
+
+            full_prompt = f"""
+  You are an expert coding teacher.
+
+  Explain this {language} code line by line.
+
+Requirements:
+
+- Beginner friendly explanation
+- Explain each important line
+- Explain logic
 - Explain output
-- Teach step-by-step
-- Use beginner friendly explanations
+- Give overall summary
 
-Student Request:
+Code:
+
 {prompt}
-
-IMPORTANT:
-Generate code and explanations specifically in {language}.
-IMPORTANT:
-Always return code inside markdown code blocks.
-
-Example:
-
-```python
-print("Hello")
-```
 """
+
+            activity_text = f"{language} Code Explained"
+
+
+        elif action == "debug":
+
+            full_prompt = f"""
+You are an expert debugging assistant.
+
+Find problems in this {language} code.
+
+Requirements:
+
+- Detect errors
+- Explain why the error happened
+- Show corrected code
+- Beginner friendly explanation
+- Explain expected output
+
+Code:
+
+{prompt}
+"""
+
+            activity_text = f"{language} Debug Completed"
+
+
+        else:
+
+            full_prompt = prompt
+
+            activity_text = "AI Used"
+
 
         try:
 
             chat_completion = client.chat.completions.create(
 
                 messages=[
+
                     {
                         "role": "user",
                         "content": full_prompt
                     }
+
                 ],
 
                 model="llama-3.3-70b-versatile",
+
             )
 
             response = chat_completion.choices[0].message.content
 
+
             AIQuery.objects.create(
+
                 user=request.user,
+
                 language=language,
+
                 prompt=prompt,
+
                 response=response
-                
+
             )
+
 
             Activity.objects.create(
 
-               user=request.user,
+                user=request.user,
 
-               action=f"{language} Code Generated"
+                action=activity_text
 
             )
+
 
         except Exception as e:
 
             response = f"AI Error: {str(e)}"
 
-    return render(request, 'users/assistant.html', {
-        'response': response
-    })
+
+    return render(
+
+        request,
+
+        'users/assistant.html',
+
+        {
+
+            'response': response
+
+        }
+
+    )
 
 def register(request):
 

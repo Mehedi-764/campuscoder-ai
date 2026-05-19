@@ -6,6 +6,10 @@
     <title>AI Assistant</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+        rel="stylesheet"
+    />
 
     <!-- Prism CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
@@ -17,73 +21,239 @@
     CampusCoder AI
 </h1>
 
-<form method="POST" class="mb-8">
+<form method="POST" class="space-y-6">
 
-    {% csrf_token %}
+  {% csrf_token %}
+
+<!-- Language Select -->
+<div>
+
+<label class="text-gray-300 font-semibold">
+
+Programming Language
+
+</label>
+
 <select
-    name="language"
-    class="w-full p-3 rounded bg-gray-900 border border-cyan-500 text-white mb-4">
+name="language"
+class="w-full mt-2 p-4 rounded-xl
+bg-gray-900 text-white border border-cyan-500">
 
-    <option value="C">C</option>
-
-    <option value="C++">C++</option>
-
-    <option value="Python">Python</option>
-
-    <option value="Java">Java</option>
-
-    <option value="JavaScript">JavaScript</option>
+  <option>Python</option>
+  <option>C</option>
+  <option>C++</option>
+  <option>Java</option>
+  <option>JavaScript</option>
 
 </select>
-    <textarea
-        name="prompt"
-        rows="5"
-        placeholder="Ask coding questions or paste your code for debugging..."
-        class="w-full p-4 rounded bg-gray-900 border border-cyan-500 text-white"
-    ></textarea>
 
-    <button
-        type="submit"
-        class="mt-4 bg-cyan-500 px-6 py-3 rounded-lg font-bold">
+</div>
 
-        Generate Response
 
-    </button>
+<!-- Prompt / Code Box -->
+<div>
+
+<label class="text-gray-300 font-semibold">
+
+Enter Prompt / Code
+
+</label>
+
+<textarea
+    name="prompt"
+    rows="8"
+    placeholder="Write prompt or paste code..."
+    class="w-full mt-2 p-5 rounded-xl
+           bg-gray-900 text-white
+           border border-cyan-500">
+
+</textarea>
+
+</div>
+
+
+
+<!-- Action Buttons -->
+<div class="flex gap-4 flex-wrap">
+
+<button
+type="submit"
+name="action"
+value="generate"
+class="flex items-center gap-3
+bg-cyan-500/20 hover:bg-cyan-500/30
+border border-cyan-500/40
+px-6 py-3 rounded-xl
+font-semibold transition">
+
+<i class="ri-code-s-slash-line text-xl"></i>
+
+Generate Code
+
+</button>
+
+
+<button
+type="submit"
+name="action"
+value="explain"
+class="flex items-center gap-3
+bg-purple-500/20 hover:bg-purple-500/30
+border border-purple-500/40
+px-6 py-3 rounded-xl
+font-semibold transition">
+
+<i class="ri-brain-line text-xl"></i>
+
+Explain Code
+
+</button>
+
+
+<button
+type="submit"
+name="action"
+value="debug"
+class="flex items-center gap-3
+bg-red-500/20 hover:bg-red-500/30
+border border-red-500/40
+px-6 py-3 rounded-xl
+font-semibold transition">
+
+<i class="ri-bug-line text-xl"></i>
+
+Debug Code
+
+</button>
+
+</div>
 
 </form>
 
 {% if response %}
 
-<div class="bg-gray-900 p-6 rounded-lg border border-cyan-500 relative">
+<div class="mt-10">
 
-    <button
-        onclick="copyCode()"
-        class="absolute top-4 right-4 bg-purple-600 px-4 py-2 rounded">
+<div class="bg-gray-900 rounded-3xl p-8 border border-cyan-500/30 shadow-2xl">
 
-        Copy
+    <!-- Header -->
 
-    </button>
+    <div class="flex justify-between items-center mb-6">
 
-<pre><code id="code" class="language-python">
+        <div class="flex items-center gap-3">
+
+            <div class="bg-cyan-500/20 p-3 rounded-xl">
+
+                <i class="ri-robot-2-line text-cyan-400 text-2xl"></i>
+
+            </div>
+
+            <div>
+
+                <h2 class="text-2xl font-bold text-cyan-400">
+
+                    AI Response
+
+                </h2>
+
+                <p class="text-gray-400 text-sm">
+
+                    CampusCoder AI Assistant
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Response Area -->
+
+    <div class="bg-black p-6 rounded-2xl overflow-auto border border-gray-700">
+
+<pre>
+<code id="code" class="language-python">
 {{ response }}
-</code></pre>
+</code>
+</pre>
+
+    </div>
+
+
+    <!-- Action Buttons -->
+
+<div class="flex flex-wrap gap-4 mt-6">
+
+<button
+onclick="copyCode()"
+class="flex items-center gap-2
+bg-cyan-500/20
+hover:bg-cyan-500/30
+px-5 py-3 rounded-xl
+transition">
+
+<i class="ri-file-copy-line"></i>
+
+Copy
+
+</button>
+
+
+<button
+class="flex items-center gap-2
+bg-yellow-500/20
+hover:bg-yellow-500/30
+px-5 py-3 rounded-xl
+transition">
+
+<i class="ri-star-line"></i>
+
+Favorite
+
+</button>
+
+
+<button
+class="flex items-center gap-2
+bg-purple-500/20
+hover:bg-purple-500/30
+px-5 py-3 rounded-xl
+transition">
+
+<i class="ri-brain-line"></i>
+
+Explain
+
+</button>
+
+</div>
+
+</div>
 
 </div>
 
 {% endif %}
 
+
 <script>
 
-function copyCode() {
+function copyCode(){
 
-    let code = document.getElementById("code").innerText;
+    let code=document.getElementById(
+        "code"
+    ).innerText;
 
-    navigator.clipboard.writeText(code);
+    navigator.clipboard.writeText(
+        code
+    );
 
-    alert("Code copied!");
 }
 
 </script>
+
+
 
 <!-- Prism JS -->
 <!-- Prism JS -->

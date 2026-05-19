@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from groq import Groq
 from django.db.models import Count
-
+from django.shortcuts import get_object_or_404
+from .models import AIQuery, Activity
+from django.db.models.functions import TruncDate
 from django.conf import settings
-
 from users.models import AIQuery
 
 client = Groq(
@@ -94,6 +95,15 @@ print("Hello")
                 language=language,
                 prompt=prompt,
                 response=response
+                
+            )
+
+            Activity.objects.create(
+
+               user=request.user,
+
+               action=f"{language} Code Generated"
+
             )
 
         except Exception as e:
@@ -178,10 +188,24 @@ def dashboard(request):
 
         return redirect('login')
 
+    #
+    # Total Prompts
+    #
     total_prompts = AIQuery.objects.filter(
         user=request.user
     ).count()
 
+    #
+    # Favorite Count
+    #
+    favorite_count = AIQuery.objects.filter(
+        user=request.user,
+        is_favorite=True
+    ).count()
+
+    #
+    # Most Used Language
+    #
     most_used = AIQuery.objects.filter(
         user=request.user
     ).values('language').annotate(
@@ -194,13 +218,120 @@ def dashboard(request):
         else 'No Data'
     )
 
+    #
+    # Real-Time Activities
+    #
+    recent_activities = Activity.objects.filter(
+
+        user=request.user
+
+    ).order_by('-created_at')[:5]
+
+    #
+    # Weekly Prompt Analytics
+    #
+    weekly_data = AIQuery.objects.filter(
+
+        user=request.user
+
+    ).annotate(
+
+        day=TruncDate('created_at')
+
+    ).values('day').annotate(
+
+        total=Count('id')
+
+    ).order_by('day')
+
+    #
+    # Graph Labels + Data
+    #
+    graph_labels = []
+
+    graph_data = []
+
+    for item in weekly_data:
+
+        graph_labels.append(
+            item['day'].strftime("%b %d")
+        )
+
+        graph_data.append(
+            item['total']
+        )
+
+    #
+    # Language Analytics
+    #
+    language_data = AIQuery.objects.filter(
+
+        user=request.user
+
+    ).values('language').annotate(
+
+        total=Count('language')
+
+    )
+
+    language_labels = []
+
+    language_totals = []
+
+    for item in language_data:
+
+        language_labels.append(
+            item['language']
+        )
+
+        language_totals.append(
+            item['total']
+        )
+
+    #
+    # Final Render
+    #
     return render(request, 'users/dashboard.html', {
 
         'total_prompts': total_prompts,
 
-        'most_used_language': most_used_language
+        'favorite_count': favorite_count,
+
+        'most_used_language': most_used_language,
+
+        'recent_activities': recent_activities,
+
+        'graph_labels': graph_labels,
+
+        'graph_data': graph_data,
+
+        'language_labels': language_labels,
+
+        'language_totals': language_totals,
 
     })
+
+def favorite_chat(request, chat_id):
+
+    chat = get_object_or_404(
+        AIQuery,
+        id=chat_id,
+        user=request.user
+    )
+
+    chat.is_favorite = True
+
+    Activity.objects.create(
+
+         user=request.user,
+
+        action="Added Code To Favorites"
+
+    )
+
+    chat.save()
+
+    return redirect('history')
 
 
 def logout_view(request):

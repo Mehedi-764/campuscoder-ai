@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import history, register, login_view, dashboard, logout_view, home, assistant, favorite_chat
+from .views import history, register, login_view, dashboard, logout_view, home, assistant, favorite_chat, visualizer
 
 urlpatterns = [
+
+    path('visualizer/', visualizer, name='visualizer'),
 
     path('history/', history, name='history'),
     

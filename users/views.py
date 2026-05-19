@@ -412,6 +412,17 @@ def favorite_chat(request, chat_id):
     return redirect('history')
 
 
+def visualizer(request):
+
+    return render(
+
+        request,
+
+        'users/visualizer.html'
+
+    )
+
+
 def logout_view(request):
 
     logout(request)

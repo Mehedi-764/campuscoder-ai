@@ -85,18 +85,21 @@ def assistant(request):
 
   Explain this {language} code line by line.
 
-Requirements:
+  Requirements:
 
-- Beginner friendly explanation
-- Explain each important line
-- Explain logic
-- Explain output
-- Give overall summary
+  - Explain in Bangla language
+  - Keep programming keywords in English
+  - Beginner friendly explanation
+  - Explain each important line
+  - Explain logic
+  - Explain output
+  - Give overall summary at the end
+  - Use simple Bangla that university students can easily understand
 
-Code:
+  Code:
 
-{prompt}
-"""
+  {prompt}
+  """
 
             activity_text = f"{language} Code Explained"
 
@@ -284,11 +287,7 @@ def dashboard(request):
     #
     # Most Used Language
     #
-    most_used = AIQuery.objects.filter(
-        user=request.user
-    ).values('language').annotate(
-        total=Count('language')
-    ).order_by('-total').first()
+    most_used = AIQuery.objects.filter(user=request.user).values('language').annotate(total=Count('language')).order_by('-total').first()
 
     most_used_language = (
         most_used['language']

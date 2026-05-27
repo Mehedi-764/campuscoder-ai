@@ -1,59 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CampusCoder AI</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
 
-<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-black text-white">
+    {% load static %}
+     
+    <link rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}">
 
-<div class="flex flex-col items-center justify-center min-h-screen">
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-    <h1 class="text-6xl font-extrabold mb-6
-        bg-gradient-to-r from-fuchsia-400 to-cyan-400
-        text-transparent bg-clip-text">
-           CampusCoder AI
-    </h1>
+    <style>
+      body {
+        overflow: hidden;
+      }
+      
+      /* Animated Background */
+      .bg-grid {
+        background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      
+        background-size: 40px 40px;
+      }
+      
+      /* Floating Animation */
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+      
+      .float {
+        animation: float 6s ease-in-out infinite;
+      }
+      
+      .float2 {
+        animation: float 8s ease-in-out infinite;
+      }
+      
+      .float3 {
+        animation: float 10s ease-in-out infinite;
+      }
+      
+      /* Glow */
+      .glow {
+        box-shadow: 0 0 25px rgba(34, 211, 238, 0.4), 0 0 60px rgba(168, 85, 247, 0.25);
+      }
+    </style>
+  </head>
 
-    <p class="text-gray-300 mb-8 text-lg">
-        AI Coding Helper for Programming Students
-    </p>
+  <body class="bg-black text-white relative">
+    <!-- BACKGROUND -->
+    <div class="absolute inset-0 bg-gradient-to-br from-[#050816] via-[#0b1120] to-black"></div>
 
-    <div class="space-x-4">
+    <!-- GRID -->
+    <div class="absolute inset-0 bg-grid opacity-20"></div>
 
-        <a href="/login/"
-           class="relative inline-block px-8 py-3 font-bold text-white uppercase tracking-wide
-           bg-gradient-to-r from-fuchsia-600 to-purple-700
-           border-2 border-fuchsia-400
-           rounded-md
-           shadow-[0_0_15px_rgba(217,70,239,0.8)]
-           hover:scale-105
-           hover:shadow-[0_0_25px_rgba(217,70,239,1)]
-           transition duration-300">
+    <!-- BLUR CIRCLES -->
+    <div class="absolute top-[-120px] left-[-100px] w-[400px] h-[400px] bg-cyan-500 opacity-20 blur-3xl rounded-full"></div>
 
-            Login
+    <div class="absolute bottom-[-120px] right-[-100px] w-[400px] h-[400px] bg-fuchsia-600 opacity-20 blur-3xl rounded-full"></div>
 
-        </a>
+    <!-- FLOATING TECH ICONS -->
 
-        <a href="/register/"
-           class="relative inline-block px-8 py-3 font-bold text-white uppercase tracking-wide
-           bg-gradient-to-r from-cyan-500 to-blue-700
-           border-2 border-cyan-300
-           rounded-md
-           shadow-[0_0_15px_rgba(34,211,238,0.8)]
-           hover:scale-105
-           hover:shadow-[0_0_25px_rgba(34,211,238,1)]
-           transition duration-300">
+    <i class="fa-brands fa-html5 text-orange-500 text-6xl absolute top-20 left-20 opacity-20 float"></i>
 
-            Register
+    <i class="fa-brands fa-css3-alt text-blue-500 text-6xl absolute top-40 right-32 opacity-20 float2"></i>
 
-        </a>
+    <i class="fa-brands fa-js text-yellow-400 text-6xl absolute bottom-32 left-40 opacity-20 float3"></i>
+
+    <i class="fa-brands fa-python text-cyan-400 text-6xl absolute bottom-20 right-24 opacity-20 float"></i>
+
+    <i class="fa-solid fa-code text-pink-400 text-5xl absolute top-1/2 left-16 opacity-20 float2"></i>
+
+    <i class="fa-solid fa-terminal text-green-400 text-5xl absolute top-1/3 right-20 opacity-20 float3"></i>
+
+    <i class="fa-solid fa-laptop-code text-purple-400 text-5xl absolute bottom-40 right-1/2 opacity-20 float"></i>
+
+    <!-- MAIN CONTENT -->
+
+    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
+      <!-- Badge -->
+      <div class="mb-6 px-5 py-2 rounded-full border border-cyan-400/30 bg-white/5 backdrop-blur-md text-cyan-300 text-sm tracking-wider">AI Powered Coding Platform</div>
+
+      <!-- TITLE -->
+
+      <h1 class="text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-purple-500 text-transparent bg-clip-text leading-tight">CampusCoder AI</h1>
+
+      <!-- DESCRIPTION -->
+
+      <p class="max-w-2xl text-lg md:text-xl text-gray-300 leading-relaxed mb-10">Learn programming smarter with AI assistance. Solve coding problems, explore algorithms, and level up your developer journey.</p>
+
+      <!-- BUTTONS -->
+
+      <div class="flex flex-wrap gap-5 justify-center">
+        <!-- LOGIN -->
+
+        <a href="/login/" class="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-fuchsia-600 to-purple-700 font-bold tracking-wide overflow-hidden glow hover:scale-105 transition duration-300"><span class="relative z-10">Login</span></a>
+
+        <!-- REGISTER -->
+
+        <a href="/register/" class="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-700 font-bold tracking-wide overflow-hidden glow hover:scale-105 transition duration-300"><span class="relative z-10">Register</span></a>
+      </div>
 
     </div>
-
-</div>
-
-</body>
+  </body>
 </html>

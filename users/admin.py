@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+admin.site.site_header = "CampusCoder AI Admin"
+admin.site.site_title = "CampusCoder AI"
+admin.site.index_title = "Control Panel"

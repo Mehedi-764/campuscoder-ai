@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 
 GROQ_API_KEY = config('GROQ_API_KEY')

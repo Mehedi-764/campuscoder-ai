@@ -3,7 +3,7 @@ anyio==4.11.0
 cachetools==6.2.2
 certifi>=2024.0.0
 cffi==2.0.0
-charset-normalizer==3.5.0
+charset-normalizer>=3.4.0
 colorama==0.4.6
 Django==6.0.5
 google-ai-generativelanguage==0.6.20

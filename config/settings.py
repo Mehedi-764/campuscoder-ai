@@ -80,12 +80,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import os
 import dj_database_url
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    print("WARNING: DATABASE_URL not set, using sqlite fallback")
+    DATABASE_URL = "sqlite:///db.sqlite3"
+
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.environ.get("DATABASE_URL")
-    )
+    "default": dj_database_url.parse(DATABASE_URL)
 }
 
 

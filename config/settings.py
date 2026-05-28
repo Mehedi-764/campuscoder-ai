@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 import os
 import dj_database_url
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("postgresql://neondb_owner:npg_fHpZG17hyYwc@ep-nameless-star-apjrtljd-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require")
 
 if not DATABASE_URL:
     print("WARNING: DATABASE_URL not set, using sqlite fallback")
-    DATABASE_URL = "sqlite:///db.sqlite3"
+    DATABASE_URL = "postgresql://neondb_owner:npg_fHpZG17hyYwc@ep-nameless-star-apjrtljd-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
 DATABASES = {
     "default": dj_database_url.parse(DATABASE_URL)

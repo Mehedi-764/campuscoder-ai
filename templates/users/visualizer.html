@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Algorithm Visualizer</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link
+href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+rel="stylesheet"/>
+
+{% load static %}
+     
+    <link rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}">
+
+</head>
+
+
+<body class="bg-black text-white min-h-screen p-10">
+
+<div class="max-w-7xl mx-auto">
+
+  <h1 class="text-5xl font-black text-cyan-400 mb-10">
+
+    Algorithm Visualizer
+
+  </h1>
+
+
+<div class="bg-gray-900 p-8 rounded-3xl">
+
+   <label class="text-gray-300">
+
+     Choose Algorithm
+
+   </label>
+
+<select id="algorithm" class="w-full mt-3 p-4 rounded-xl bg-black border border-cyan-500">
+
+     <option>Bubble Sort</option>
+
+     <option>Selection Sort</option>
+
+     <option>Binary Search</option>
+
+     <option>Merge Sort</option>
+
+</select>
+
+
+   <button onclick="visualize()" class="mt-6 bg-cyan-500 hover:bg-cyan-600 px-8 py-4 rounded-xl">
+
+      Visualize
+
+   </button>
+
+</div>
+
+
+<!-- Visualization Container -->
+
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-10">
+
+<!-- Left Panel -->
+
+<div class="bg-gray-900 rounded-3xl p-6 border border-cyan-500/20">
+
+    <h2 class="text-xl font-bold text-cyan-400 mb-6">
+
+        Steps
+
+    </h2>
+
+    <div id="stepInfo">
+
+        <div class="bg-cyan-500/10 p-4 rounded-xl">
+
+            Waiting for visualization...
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Center Visual Area -->
+
+<div class="lg:col-span-3 bg-gray-900 rounded-3xl p-8 border border-cyan-500/20">
+
+     <div class="flex justify-between mb-8">
+
+        <h2 class="text-2xl font-bold">
+
+            Visualization Area
+
+         </h2>
+
+   <div class="bg-purple-500/20 px-4 py-2 rounded-xl">
+
+          Bubble Sort
+
+   </div>
+
+</div>
+
+
+
+<div id="visualArea" class="h-[450px] flex items-end justify-center gap-4 border border-gray-800 rounded-2xl p-8">
+
+</div>
+
+
+
+<div class="grid grid-cols-3 gap-4 mt-8">
+
+    <div class="bg-black p-4 rounded-xl">
+
+      Comparisons: <span id="comparison"> 0 </span>
+
+    </div>
+
+   <div class="bg-black p-4 rounded-xl">
+
+    Swaps: <span id="swaps"> </span>
+
+   </div>
+
+   <div class="bg-black p-4 rounded-xl">
+
+    Status: <span id="status"> Ready </span>
+
+   </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+      async function visualize(){
+
+      let arr=[50,120,80,150,60,100,40];
+
+      let visualArea=document.getElementById("visualArea");
+
+      visualArea.innerHTML="";
+
+      let comparison=0;
+      let swaps=0;
+
+      document.getElementById("status").innerText="Running";
+
+
+
+ function renderBars(array){
+
+   visualArea.innerHTML="";
+
+   array.forEach(value=>{
+
+  let container= document.createElement( "div");
+
+    container.className= "flex flex-col items-center";
+
+    container.innerHTML=` <div class="text-sm mb-2 font-bold text-cyan-300">
+
+      ${value}
+
+    </div>
+
+<div class="bg-cyan-400 rounded-t-xl shadow-lg shadow-cyan-500/40 transition-all duration-700" style=" height:${value*2}px; width:60px;"></div>`;
+
+   visualArea.appendChild(container);
+
+   });
+
+ }
+
+
+renderBars(arr);
+
+
+for(let i=0;i<arr.length;i++){
+
+   for(let j=0;j<arr.length-i-1;j++){
+
+     comparison++;
+
+     document.getElementById("comparison").innerText=comparison;
+
+
+    document.getElementById("stepInfo").innerHTML=`
+
+   <div class="bg-purple-500/10 p-4 rounded-xl">
+
+    Comparing: ${arr[j]} and ${arr[j+1]}
+
+   </div>`;
+
+
+await sleep(800);
+
+
+if(arr[j]>arr[j+1]){
+
+   swaps++;
+
+   document.getElementById("swaps").innerText=swaps;
+
+
+   [arr[j],arr[j+1]]=[arr[j+1],arr[j]];
+
+
+   renderBars(arr);
+
+   await sleep(700);
+
+  }
+
+ }
+
+}
+
+   document.getElementById("status").innerText="Completed";
+
+}
+
+
+
+function sleep(ms){
+
+  return new Promise(resolve=>setTimeout(resolve,ms));
+
+  }
+
+</script>
+
+</body>
+
+</html>

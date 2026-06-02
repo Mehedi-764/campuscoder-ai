@@ -1,18 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>CampusCoder AI</title>
 
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+          rel="stylesheet">
+
+    {% load static %}
+     
+    <link rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}">
+
+    <!-- Prism Theme -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css"
+          rel="stylesheet"/>
+
+    <style>
+
+        body {
+
+            background:
+            radial-gradient(circle at top left,
+            rgba(0,255,255,0.08),
+            transparent 25%),
+
+            radial-gradient(circle at bottom right,
+            rgba(168,85,247,0.10),
+            transparent 25%),
+
+            #050816;
+
+            overflow-x: hidden;
+        }
+
+        .glass {
+
+            background: rgba(255,255,255,0.05);
+
+            backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .glow {
+
+            box-shadow:
+            0 0 20px rgba(34,211,238,0.15);
+        }
+
+        .sidebar-link {
+
+            transition: 0.3s;
+        }
+
+        .sidebar-link:hover {
+
+            transform: translateX(6px);
+
+            background: rgba(34,211,238,0.12);
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-gray-100">
+<body class="text-white min-h-screen">
 
-    <h1 class="text-4xl text-center mt-10 font-bold">
-        CampusCoder AI
-    </h1>
+<div class="flex">
+
+    <!-- Sidebar -->
+    <aside class="w-72 h-screen sticky top-0 glass border-r border-cyan-500/20 p-6 flex flex-col justify-between">
+
+        <div>
+
+            <!-- Logo -->
+            <div class="mb-12">
+
+                <h1 class="text-3xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-transparent bg-clip-text">
+
+                    CampusCoder AI
+
+                </h1>
+
+                <p class="text-gray-400 mt-2 text-sm">
+
+                    Futuristic AI Coding Workspace
+
+                </p>
+
+            </div>
+
+            <!-- Navigation -->
+            <nav class="space-y-3">
+
+                <a href="/dashboard/"
+                   class="sidebar-link flex items-center gap-4
+                   glass glow rounded-2xl px-5 py-4">
+
+                    <i class="ri-dashboard-fill text-cyan-400 text-xl"></i>
+
+                    <span class="font-semibold">
+                        Dashboard
+                    </span>
+
+                </a>
+
+                <a href="/assistant/"
+                   class="sidebar-link flex items-center gap-4
+                   rounded-2xl px-5 py-4">
+
+                    <i class="ri-robot-2-fill text-cyan-400 text-xl"></i>
+
+                    <span>
+                        AI Assistant
+                    </span>
+
+
+                <a href="/visualizer/"
+                   class="sidebar-link flex items-center gap-4 rounded-2xl px-5 py-4">
+
+                    <i class="ri-bar-chart-box-line text-cyan-400 text-xl"></i>
+
+                    <span>
+                        AI Visualizer
+                    </span>
+
+
+                </a>
+
+                <a href="/history/"
+                   class="sidebar-link flex items-center gap-4
+                   rounded-2xl px-5 py-4">
+
+                    <i class="ri-history-fill text-purple-400 text-xl"></i>
+
+                    <span>
+                        Chat History
+                    </span>
+
+                </a>
+
+                <a href="#"
+                   class="sidebar-link flex items-center gap-4
+                   rounded-2xl px-5 py-4">
+
+                    <i class="ri-star-fill text-yellow-400 text-xl"></i>
+
+                    <span>
+                        Favorites
+                    </span>
+
+                </a>
+
+                <a href="#"
+                   class="sidebar-link flex items-center gap-4
+                   rounded-2xl px-5 py-4">
+
+                    <i class="ri-bar-chart-box-fill text-green-400 text-xl"></i>
+
+                    <span>
+                        Analytics
+                    </span>
+
+                </a>
+
+            </nav>
+
+        </div>
+
+        <!-- Bottom -->
+        <div>
+
+            <div class="glass rounded-2xl p-5 mb-5">
+
+                <p class="text-sm text-gray-400 mb-2">
+
+                    AI Workspace Status
+
+                </p>
+
+                <div class="flex items-center gap-2">
+
+                    <div class="w-3 h-3 rounded-full
+                    bg-green-400 animate-pulse"></div>
+
+                    <p class="text-green-400 font-semibold">
+
+                        System Active
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <a href="/logout/"
+               class="flex items-center justify-center
+               gap-3 bg-red-500/20
+               hover:bg-red-500/30
+               transition rounded-2xl py-4">
+
+                <i class="ri-logout-box-r-fill"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-10">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+</div>
 
 </body>
+
 </html>

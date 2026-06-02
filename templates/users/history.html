@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Chat History</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {% load static %}
+     
+    <link rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}">
+
+</head>
+
+<body class="bg-black text-white min-h-screen p-10">
+
+    <h1 class="text-5xl font-bold text-cyan-400 mb-10">
+        AI Chat History
+    </h1>
+
+    {% if chats %}
+
+        {% for chat in chats %}
+
+        <div class="bg-gray-900 border border-cyan-500 rounded-xl p-6 mb-8 shadow-lg">
+
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-4">
+
+                <h2 class="text-cyan-400 text-2xl font-bold">
+                    Prompt
+                </h2>
+
+                <span class="bg-cyan-500 text-black px-4 py-1 rounded-full text-sm font-bold">
+
+                    {{ chat.language }}
+
+                </span>
+
+            </div>
+
+            <!-- Prompt -->
+            <div class="bg-black p-4 rounded-lg mb-6 border border-gray-700">
+
+                <p class="whitespace-pre-wrap text-gray-300">
+                    {{ chat.prompt }}
+                </p>
+
+            </div>
+
+            <!-- Response Title -->
+            <h2 class="text-purple-400 text-2xl font-bold mb-4">
+                AI Response
+            </h2>
+
+            <!-- Response -->
+            <div class="bg-black p-4 rounded-lg border border-gray-700 overflow-x-auto">
+
+                <div class="whitespace-pre-wrap text-gray-300">
+
+                    {{ chat.response|safe }}
+
+                </div>
+
+            </div>
+
+            <div class="mt-5">
+
+               <a href="/favorite/{{ chat.id }}/"
+                  class="bg-yellow-500 hover:bg-yellow-600
+                         transition px-5 py-2 rounded-xl
+                         text-black font-bold">
+
+                            ⭐ Add to Favorite
+
+                </a>
+
+            </div>
+
+            <!-- Time -->
+            <p class="text-gray-500 text-sm mt-5">
+
+                {{ chat.created_at }}
+
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="bg-gray-900 p-8 rounded-xl border border-cyan-500">
+
+            <p class="text-gray-400 text-lg">
+                No chat history found.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</body>
+
+</html>

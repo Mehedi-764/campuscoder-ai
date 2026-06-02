@@ -1,28 +1,379 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+{% extends 'base.html' %}
 
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+{% block content %}
 
-<body class="bg-gray-100">
+<!-- Header -->
+<div class="flex justify-between items-center mb-12">
 
-<div class="p-10">
+    <div>
 
-    <h1 class="text-4xl font-bold mb-6">
-        Welcome to CampusCoder AI
-    </h1>
+        <h1 class="text-6xl font-black
+        bg-gradient-to-r
+        from-cyan-400
+        via-blue-500
+        to-purple-500
+        text-transparent bg-clip-text mb-3">
 
-    <a href="{% url 'logout' %}"
-       class="bg-red-500 text-white px-4 py-2 rounded">
+            AI Analytics Dashboard
 
-        Logout
+        </h1>
 
-    </a>
+        <p class="text-gray-400 text-lg">
+
+            Monitor your AI coding productivity.
+
+        </p>
+
+    </div>
 
 </div>
 
-</body>
-</html>
+<!-- Floating Statistics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+
+    <!-- Total Prompts -->
+    <div class="glass glow rounded-3xl p-8 relative overflow-hidden">
+
+        <div class="absolute top-0 right-0
+        w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl"></div>
+
+        <div class="flex justify-between items-center mb-5">
+
+            <div>
+
+                <p class="text-gray-400 text-lg mb-2">
+
+                    Total Prompts
+
+                </p>
+
+                <h2 class="text-6xl font-black text-cyan-400">
+
+                    {{ total_prompts }}
+
+                </h2>
+
+            </div>
+
+            <div class="bg-cyan-500/20 p-5 rounded-2xl">
+
+                <i class="ri-terminal-box-fill
+                text-4xl text-cyan-400"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Favorite Codes -->
+    <div class="glass glow rounded-3xl p-8 relative overflow-hidden">
+
+        <div class="absolute bottom-0 left-0
+        w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
+
+        <div class="flex justify-between items-center mb-5">
+
+            <div>
+
+                <p class="text-gray-400 text-lg mb-2">
+
+                    Favorite Codes
+
+                </p>
+
+                <h2 class="text-6xl font-black text-purple-400">
+
+                    {{ favorite_count }}
+
+                </h2>
+
+            </div>
+
+            <div class="bg-purple-500/20 p-5 rounded-2xl">
+
+                <i class="ri-star-fill
+                text-4xl text-purple-400"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Most Used -->
+    <div class="glass glow rounded-3xl p-8 relative overflow-hidden">
+
+        <div class="absolute top-0 left-0
+        w-32 h-32 bg-green-500/10 rounded-full blur-3xl"></div>
+
+        <div class="flex justify-between items-center mb-5">
+
+            <div>
+
+                <p class="text-gray-400 text-lg mb-2">
+
+                    Most Used Language
+
+                </p>
+
+                <h2 class="text-4xl font-black text-green-400">
+
+                    {{ most_used_language }}
+
+                </h2>
+
+            </div>
+
+            <div class="bg-green-500/20 p-5 rounded-2xl">
+
+                <i class="ri-code-box-fill
+                text-4xl text-green-400"></i>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+
+    <!-- Live Prompt Analytics -->
+    <div class="glass rounded-3xl p-8 lg:col-span-2">
+
+        <div class="flex justify-between items-center mb-8">
+
+            <div>
+
+                <h2 class="text-3xl font-bold text-cyan-400">
+
+                    Live AI Usage
+
+                </h2>
+
+                <p class="text-gray-400 mt-2">
+
+                    Real database analytics
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <canvas id="usageChart" height="120"></canvas>
+
+    </div>
+
+    <!-- Language Pie Chart -->
+    <div class="glass rounded-3xl p-8">
+
+        <h2 class="text-3xl font-bold
+        text-purple-400 mb-8">
+
+            Language Analytics
+
+        </h2>
+
+        <canvas id="languageChart"></canvas>
+
+    </div>
+
+</div>
+
+    <!-- AI Timeline -->
+    <div class="glass rounded-3xl p-8">
+
+        <h2 class="text-3xl font-bold text-purple-400 mb-8">
+
+            AI Activity
+
+        </h2>
+
+        <div class="space-y-6">
+
+    {% for activity in recent_activities %}
+
+    <div class="flex gap-4">
+
+        <div class="w-3 h-3 bg-cyan-400
+        rounded-full mt-2 animate-pulse"></div>
+
+        <div>
+
+            <p class="font-semibold">
+
+                {{ activity.action }}
+
+            </p>
+
+            <p class="text-gray-400 text-sm">
+
+                {{ activity.created_at|timesince }} ago
+
+            </p>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <p class="text-gray-400">
+
+        No recent activity found.
+
+    </p>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- Chart JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+//
+// LINE GRAPH
+//
+
+const ctx = document.getElementById('usageChart');
+
+new Chart(ctx, {
+
+    type: 'line',
+
+    data: {
+
+        labels: {{ graph_labels|safe }},
+
+        datasets: [{
+
+            label: 'Prompts',
+
+            data: {{ graph_data|safe }},
+
+            tension: 0.4,
+
+            fill: true,
+
+            borderColor: '#22d3ee',
+
+            backgroundColor: 'rgba(34,211,238,0.1)',
+
+            pointBackgroundColor: '#22d3ee',
+
+            pointRadius: 5
+
+        }]
+
+    },
+
+    options: {
+
+        plugins: {
+
+            legend: {
+
+                labels: {
+
+                    color: 'white'
+
+                }
+
+            }
+
+        },
+
+        scales: {
+
+            y: {
+
+                ticks: {
+
+                    color: 'white'
+
+                }
+
+            },
+
+            x: {
+
+                ticks: {
+
+                    color: 'white'
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+
+//
+// PIE CHART
+//
+
+const pieCtx = document.getElementById('languageChart');
+
+new Chart(pieCtx, {
+
+    type: 'doughnut',
+
+    data: {
+
+        labels: {{ language_labels|safe }},
+
+        datasets: [{
+
+            data: {{ language_totals|safe }},
+
+            backgroundColor: [
+
+                '#22d3ee',
+
+                '#a855f7',
+
+                '#4ade80',
+
+                '#f97316',
+
+                '#facc15'
+
+            ]
+
+        }]
+
+    },
+
+    options: {
+
+        plugins: {
+
+            legend: {
+
+                labels: {
+
+                    color: 'white'
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

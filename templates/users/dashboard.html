@@ -3,22 +3,19 @@
 {% block content %}
 
 <!-- Header -->
-<div class="flex justify-between items-center mb-12">
+<div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 lg:mb-12 gap-6">
 
     <div>
 
-        <h1 class="text-6xl font-black
-        bg-gradient-to-r
-        from-cyan-400
-        via-blue-500
-        to-purple-500
-        text-transparent bg-clip-text mb-3">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black
+        bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500
+        text-transparent bg-clip-text mb-3 leading-tight">
 
             AI Analytics Dashboard
 
         </h1>
 
-        <p class="text-gray-400 text-lg">
+        <p class="text-gray-400 text-sm sm:text-base lg:text-lg">
 
             Monitor your AI coding productivity.
 
@@ -29,37 +26,30 @@
 </div>
 
 <!-- Floating Statistics -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-10 lg:mb-12">
 
     <!-- Total Prompts -->
-    <div class="glass glow rounded-3xl p-8 relative overflow-hidden">
+    <div class="glass glow rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 relative overflow-hidden">
 
         <div class="absolute top-0 right-0
-        w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        w-24 sm:w-28 lg:w-32 h-24 sm:h-28 lg:h-32 bg-cyan-500/10 rounded-full blur-3xl"></div>
 
         <div class="flex justify-between items-center mb-5">
 
             <div>
 
-                <p class="text-gray-400 text-lg mb-2">
-
+                <p class="text-gray-400 text-sm sm:text-base lg:text-lg mb-2">
                     Total Prompts
-
                 </p>
 
-                <h2 class="text-6xl font-black text-cyan-400">
-
+                <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black text-cyan-400">
                     {{ total_prompts }}
-
                 </h2>
 
             </div>
 
-            <div class="bg-cyan-500/20 p-5 rounded-2xl">
-
-                <i class="ri-terminal-box-fill
-                text-4xl text-cyan-400"></i>
-
+            <div class="bg-cyan-500/20 p-3 sm:p-4 lg:p-5 rounded-xl lg:rounded-2xl">
+                <i class="ri-terminal-box-fill text-2xl sm:text-3xl lg:text-4xl text-cyan-400"></i>
             </div>
 
         </div>
@@ -67,34 +57,27 @@
     </div>
 
     <!-- Favorite Codes -->
-    <div class="glass glow rounded-3xl p-8 relative overflow-hidden">
+    <div class="glass glow rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 relative overflow-hidden">
 
         <div class="absolute bottom-0 left-0
-        w-32 h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
+        w-24 sm:w-28 lg:w-32 h-24 sm:h-28 lg:h-32 bg-purple-500/10 rounded-full blur-3xl"></div>
 
         <div class="flex justify-between items-center mb-5">
 
             <div>
 
-                <p class="text-gray-400 text-lg mb-2">
-
+                <p class="text-gray-400 text-sm sm:text-base lg:text-lg mb-2">
                     Favorite Codes
-
                 </p>
 
-                <h2 class="text-6xl font-black text-purple-400">
-
+                <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black text-purple-400">
                     {{ favorite_count }}
-
                 </h2>
 
             </div>
 
-            <div class="bg-purple-500/20 p-5 rounded-2xl">
-
-                <i class="ri-star-fill
-                text-4xl text-purple-400"></i>
-
+            <div class="bg-purple-500/20 p-3 sm:p-4 lg:p-5 rounded-xl lg:rounded-2xl">
+                <i class="ri-star-fill text-2xl sm:text-3xl lg:text-4xl text-purple-400"></i>
             </div>
 
         </div>
@@ -102,34 +85,27 @@
     </div>
 
     <!-- Most Used -->
-    <div class="glass glow rounded-3xl p-8 relative overflow-hidden">
+    <div class="glass glow rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 relative overflow-hidden">
 
         <div class="absolute top-0 left-0
-        w-32 h-32 bg-green-500/10 rounded-full blur-3xl"></div>
+        w-24 sm:w-28 lg:w-32 h-24 sm:h-28 lg:h-32 bg-green-500/10 rounded-full blur-3xl"></div>
 
         <div class="flex justify-between items-center mb-5">
 
             <div>
 
-                <p class="text-gray-400 text-lg mb-2">
-
+                <p class="text-gray-400 text-sm sm:text-base lg:text-lg mb-2">
                     Most Used Language
-
                 </p>
 
-                <h2 class="text-4xl font-black text-green-400">
-
+                <h2 class="text-xl sm:text-2xl lg:text-4xl font-black text-green-400 break-words">
                     {{ most_used_language }}
-
                 </h2>
 
             </div>
 
-            <div class="bg-green-500/20 p-5 rounded-2xl">
-
-                <i class="ri-code-box-fill
-                text-4xl text-green-400"></i>
-
+            <div class="bg-green-500/20 p-3 sm:p-4 lg:p-5 rounded-xl lg:rounded-2xl">
+                <i class="ri-code-box-fill text-2xl sm:text-3xl lg:text-4xl text-green-400"></i>
             </div>
 
         </div>
@@ -138,240 +114,143 @@
 
 </div>
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-10 lg:mb-12">
 
     <!-- Live Prompt Analytics -->
-    <div class="glass rounded-3xl p-8 lg:col-span-2">
+    <div class="glass rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 lg:col-span-2 overflow-hidden">
 
-        <div class="flex justify-between items-center mb-8">
+        <div class="mb-6 lg:mb-8">
 
-            <div>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-cyan-400">
+                Live AI Usage
+            </h2>
 
-                <h2 class="text-3xl font-bold text-cyan-400">
-
-                    Live AI Usage
-
-                </h2>
-
-                <p class="text-gray-400 mt-2">
-
-                    Real database analytics
-
-                </p>
-
-            </div>
+            <p class="text-gray-400 mt-2 text-sm sm:text-base">
+                Real database analytics
+            </p>
 
         </div>
 
-        <canvas id="usageChart" height="120"></canvas>
+        <div class="w-full overflow-x-auto">
+            <canvas id="usageChart" height="120"></canvas>
+        </div>
 
     </div>
 
     <!-- Language Pie Chart -->
-    <div class="glass rounded-3xl p-8">
+    <div class="glass rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8">
 
-        <h2 class="text-3xl font-bold
-        text-purple-400 mb-8">
-
+        <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-400 mb-6 lg:mb-8">
             Language Analytics
-
         </h2>
 
-        <canvas id="languageChart"></canvas>
-
-    </div>
-
-</div>
-
-    <!-- AI Timeline -->
-    <div class="glass rounded-3xl p-8">
-
-        <h2 class="text-3xl font-bold text-purple-400 mb-8">
-
-            AI Activity
-
-        </h2>
-
-        <div class="space-y-6">
-
-    {% for activity in recent_activities %}
-
-    <div class="flex gap-4">
-
-        <div class="w-3 h-3 bg-cyan-400
-        rounded-full mt-2 animate-pulse"></div>
-
-        <div>
-
-            <p class="font-semibold">
-
-                {{ activity.action }}
-
-            </p>
-
-            <p class="text-gray-400 text-sm">
-
-                {{ activity.created_at|timesince }} ago
-
-            </p>
-
+        <div class="w-full">
+            <canvas id="languageChart"></canvas>
         </div>
 
     </div>
 
-    {% empty %}
-
-    <p class="text-gray-400">
-
-        No recent activity found.
-
-    </p>
-
-    {% endfor %}
-
 </div>
 
+<!-- AI Timeline -->
+<div class="glass rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8">
+
+    <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-400 mb-6 lg:mb-8">
+        AI Activity
+    </h2>
+
+    <div class="space-y-5 lg:space-y-6">
+
+        {% for activity in recent_activities %}
+
+        <div class="flex gap-3 sm:gap-4">
+
+            <div class="w-2 sm:w-3 h-2 sm:h-3 bg-cyan-400 rounded-full mt-2 animate-pulse"></div>
+
+            <div class="min-w-0">
+
+                <p class="font-semibold text-sm sm:text-base break-words">
+                    {{ activity.action }}
+                </p>
+
+                <p class="text-gray-400 text-xs sm:text-sm">
+                    {{ activity.created_at|timesince }} ago
+                </p>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="text-gray-400 text-sm sm:text-base">
+            No recent activity found.
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
 
 <!-- Chart JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 
-//
-// LINE GRAPH
-//
-
 const ctx = document.getElementById('usageChart');
 
 new Chart(ctx, {
-
     type: 'line',
-
     data: {
-
         labels: {{ graph_labels|safe }},
-
         datasets: [{
-
             label: 'Prompts',
-
             data: {{ graph_data|safe }},
-
             tension: 0.4,
-
             fill: true,
-
             borderColor: '#22d3ee',
-
             backgroundColor: 'rgba(34,211,238,0.1)',
-
             pointBackgroundColor: '#22d3ee',
-
-            pointRadius: 5
-
+            pointRadius: 4
         }]
-
     },
-
     options: {
-
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
-
             legend: {
-
-                labels: {
-
-                    color: 'white'
-
-                }
-
+                labels: { color: 'white' }
             }
-
         },
-
         scales: {
-
-            y: {
-
-                ticks: {
-
-                    color: 'white'
-
-                }
-
-            },
-
-            x: {
-
-                ticks: {
-
-                    color: 'white'
-
-                }
-
-            }
-
+            x: { ticks: { color: 'white' } },
+            y: { ticks: { color: 'white' } }
         }
-
     }
-
 });
-
-
-//
-// PIE CHART
-//
 
 const pieCtx = document.getElementById('languageChart');
 
 new Chart(pieCtx, {
-
     type: 'doughnut',
-
     data: {
-
         labels: {{ language_labels|safe }},
-
         datasets: [{
-
             data: {{ language_totals|safe }},
-
-            backgroundColor: [
-
-                '#22d3ee',
-
-                '#a855f7',
-
-                '#4ade80',
-
-                '#f97316',
-
-                '#facc15'
-
-            ]
-
+            backgroundColor: ['#22d3ee','#a855f7','#4ade80','#f97316','#facc15']
         }]
-
     },
-
     options: {
-
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
-
             legend: {
-
-                labels: {
-
-                    color: 'white'
-
-                }
-
+                labels: { color: 'white' }
             }
-
         }
-
     }
-
 });
 
 </script>

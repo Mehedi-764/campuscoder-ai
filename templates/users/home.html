@@ -1,119 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CampusCoder AI</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusCoder AI</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    {% load static %}
-     
-    <link rel="icon"
-      type="image/x-icon"
-      href="{% static 'images/favicon.ico' %}">
+  {% load static %}
 
-    <!-- ICONS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link
+    rel="icon"
+    type="image/x-icon"
+    href="{% static 'images/favicon.ico' %}"
+  />
 
-    <style>
-      body {
-        overflow: hidden;
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+  <style>
+    body {
+      overflow-x: hidden;
+    }
+
+    /* Grid Background */
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* Floating Animation */
+    @keyframes float {
+      0% {
+        transform: translateY(0);
       }
-      
-      /* Animated Background */
-      .bg-grid {
-        background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      
-        background-size: 40px 40px;
+      50% {
+        transform: translateY(-20px);
       }
-      
-      /* Floating Animation */
-      @keyframes float {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-20px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
+      100% {
+        transform: translateY(0);
       }
-      
-      .float {
-        animation: float 6s ease-in-out infinite;
+    }
+
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .float2 {
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .float3 {
+      animation: float 10s ease-in-out infinite;
+    }
+
+    /* Glow Effect */
+    .glow {
+      box-shadow:
+        0 0 25px rgba(34, 211, 238, 0.4),
+        0 0 60px rgba(168, 85, 247, 0.25);
+    }
+
+    @media (max-width: 480px) {
+      .floating-icon {
+        display: none;
       }
-      
-      .float2 {
-        animation: float 8s ease-in-out infinite;
-      }
-      
-      .float3 {
-        animation: float 10s ease-in-out infinite;
-      }
-      
-      /* Glow */
-      .glow {
-        box-shadow: 0 0 25px rgba(34, 211, 238, 0.4), 0 0 60px rgba(168, 85, 247, 0.25);
-      }
-    </style>
-  </head>
+    }
+  </style>
+</head>
 
-  <body class="bg-black text-white relative">
-    <!-- BACKGROUND -->
-    <div class="absolute inset-0 bg-gradient-to-br from-[#050816] via-[#0b1120] to-black"></div>
+<body class="text-white min-h-screen relative isolate overflow-x-hidden">
 
-    <!-- GRID -->
-    <div class="absolute inset-0 bg-grid opacity-20"></div>
+  <!-- FIXED BACKGROUND -->
+  <div class="fixed inset-0 -z-10 bg-gradient-to-br from-[#050816] via-[#0b1120] to-black"></div>
 
-    <!-- BLUR CIRCLES -->
-    <div class="absolute top-[-120px] left-[-100px] w-[400px] h-[400px] bg-cyan-500 opacity-20 blur-3xl rounded-full"></div>
+  <!-- GRID -->
+  <div class="fixed inset-0 -z-10 bg-grid opacity-20"></div>
 
-    <div class="absolute bottom-[-120px] right-[-100px] w-[400px] h-[400px] bg-fuchsia-600 opacity-20 blur-3xl rounded-full"></div>
+  <!-- BLUR LIGHTS -->
+  <div class="fixed top-[-150px] left-[-150px] w-[450px] h-[450px] bg-cyan-500 opacity-20 blur-3xl rounded-full -z-10 pointer-events-none"></div>
 
-    <!-- FLOATING TECH ICONS -->
+  <div class="fixed bottom-[-150px] right-[-150px] w-[450px] h-[450px] bg-fuchsia-600 opacity-20 blur-3xl rounded-full -z-10 pointer-events-none"></div>
 
-    <i class="fa-brands fa-html5 text-orange-500 text-6xl absolute top-20 left-20 opacity-20 float"></i>
+  <!-- FLOATING ICONS -->
+  <i class="floating-icon fa-brands fa-html5 text-orange-500 text-6xl absolute top-20 left-20 opacity-20 float"></i>
 
-    <i class="fa-brands fa-css3-alt text-blue-500 text-6xl absolute top-40 right-32 opacity-20 float2"></i>
+  <i class="floating-icon fa-brands fa-css3-alt text-blue-500 text-6xl absolute top-40 right-32 opacity-20 float2"></i>
 
-    <i class="fa-brands fa-js text-yellow-400 text-6xl absolute bottom-32 left-40 opacity-20 float3"></i>
+  <i class="floating-icon fa-brands fa-js text-yellow-400 text-6xl absolute bottom-32 left-40 opacity-20 float3"></i>
 
-    <i class="fa-brands fa-python text-cyan-400 text-6xl absolute bottom-20 right-24 opacity-20 float"></i>
+  <i class="floating-icon fa-brands fa-python text-cyan-400 text-6xl absolute bottom-20 right-24 opacity-20 float"></i>
 
-    <i class="fa-solid fa-code text-pink-400 text-5xl absolute top-1/2 left-16 opacity-20 float2"></i>
+  <i class="floating-icon fa-solid fa-code text-pink-400 text-5xl absolute top-1/2 left-16 opacity-20 float2"></i>
 
-    <i class="fa-solid fa-terminal text-green-400 text-5xl absolute top-1/3 right-20 opacity-20 float3"></i>
+  <i class="floating-icon fa-solid fa-terminal text-green-400 text-5xl absolute top-1/3 right-20 opacity-20 float3"></i>
 
-    <i class="fa-solid fa-laptop-code text-purple-400 text-5xl absolute bottom-40 right-1/2 opacity-20 float"></i>
+  <i class="floating-icon fa-solid fa-laptop-code text-purple-400 text-5xl absolute bottom-32 left-1/2 opacity-20 float"></i>
 
-    <!-- MAIN CONTENT -->
+  <!-- MAIN CONTENT -->
+  <main class="relative z-10 min-h-screen flex items-center justify-center px-4 sm:px-6">
 
-    <div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center">
+    <div class="text-center max-w-4xl">
+
       <!-- Badge -->
-      <div class="mb-6 px-5 py-2 rounded-full border border-cyan-400/30 bg-white/5 backdrop-blur-md text-cyan-300 text-sm tracking-wider">AI Powered Coding Platform</div>
+      <div
+        class="inline-block mb-6 px-5 py-2 rounded-full border border-cyan-400/30 bg-white/5 backdrop-blur-md text-cyan-300 text-sm tracking-wider"
+      >
+        AI Powered Coding Platform
+      </div>
 
-      <!-- TITLE -->
+      <!-- Heading -->
+      <h1
+        class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold mb-6 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-purple-500 text-transparent bg-clip-text"
+      >
+        CampusCoder AI
+      </h1>
 
-      <h1 class="text-6xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-purple-500 text-transparent bg-clip-text leading-tight">CampusCoder AI</h1>
+      <!-- Description -->
+      <p
+        class="max-w-2xl mx-auto text-gray-300 text-lg md:text-xl leading-relaxed mb-10"
+      >
+        Learn programming smarter with AI assistance.
+        Solve coding problems, explore algorithms,
+        and level up your developer journey.
+      </p>
 
-      <!-- DESCRIPTION -->
+      <!-- Buttons -->
+      <div
+        class="flex flex-col sm:flex-row justify-center gap-5"
+      >
 
-      <p class="max-w-2xl text-lg md:text-xl text-gray-300 leading-relaxed mb-10">Learn programming smarter with AI assistance. Solve coding problems, explore algorithms, and level up your developer journey.</p>
+        <a
+          href="/login/"
+          class="px-10 py-4 rounded-2xl bg-gradient-to-r from-fuchsia-600 to-purple-700 font-bold tracking-wide glow hover:scale-105 transition duration-300"
+        >
+          Login
+        </a>
 
-      <!-- BUTTONS -->
+        <a
+          href="/register/"
+          class="px-10 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-700 font-bold tracking-wide glow hover:scale-105 transition duration-300"
+        >
+          Register
+        </a>
 
-      <div class="flex flex-wrap gap-5 justify-center">
-        <!-- LOGIN -->
-
-        <a href="/login/" class="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-fuchsia-600 to-purple-700 font-bold tracking-wide overflow-hidden glow hover:scale-105 transition duration-300"><span class="relative z-10">Login</span></a>
-
-        <!-- REGISTER -->
-
-        <a href="/register/" class="group relative px-8 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-700 font-bold tracking-wide overflow-hidden glow hover:scale-105 transition duration-300"><span class="relative z-10">Register</span></a>
       </div>
 
     </div>
-  </body>
+
+  </main>
+
+</body>
 </html>

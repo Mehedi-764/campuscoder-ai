@@ -17,31 +17,31 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
 </head>
 
-<body class="bg-black text-white min-h-screen p-6 sm:p-10">
+<body class="bg-black text-white min-h-screen p-6 max-sm:p-4">
 
 {% load static %}
 
 <!-- HEADER -->
-<div class="flex flex-col sm:flex-row items-center justify-between mb-10 gap-6">
+<div class="flex items-center justify-between mb-10 gap-6 max-sm:flex-col">
 
-    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
+    <div class="flex items-center gap-5 text-left max-sm:flex-col max-sm:text-center">
 
         <img
         src="{% static 'images/logo.png' %}"
-        class="w-20 sm:w-24 h-20 sm:h-24 object-contain
+        class="w-24 h-24 object-contain
         drop-shadow-[0_0_20px_rgba(34,211,238,.4)]">
 
         <div>
 
-            <h1 class="text-3xl sm:text-4xl font-black
+            <h1 class="text-4xl font-black
             bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500
-            text-transparent bg-clip-text">
+            text-transparent bg-clip-text max-sm:text-3xl">
 
                 CampusCoder AI
 
             </h1>
 
-            <p class="text-gray-400 text-sm sm:text-base">
+            <p class="text-gray-400 text-base max-sm:text-sm">
                 Smart Coding Mentor for Students
             </p>
 
@@ -58,14 +58,16 @@
 
   <!-- LANGUAGE -->
   <div class="flex flex-col">
-    <label class="text-gray-300 font-semibold text-sm sm:text-base mb-2">
+
+    <label class="text-gray-300 font-semibold text-base mb-2 max-sm:text-sm">
         Programming Language
     </label>
 
     <select
         name="language"
-        class="w-full p-3 sm:p-4 rounded-xl
-        bg-gray-900 text-white border border-cyan-500 text-sm sm:text-base">
+        class="w-full p-4 rounded-xl
+        bg-gray-900 text-white border border-cyan-500
+        max-sm:p-3 max-sm:text-sm">
 
         <option>Python</option>
         <option>C</option>
@@ -74,11 +76,13 @@
         <option>JavaScript</option>
 
     </select>
+
   </div>
 
   <!-- PROMPT -->
   <div class="flex flex-col">
-    <label class="text-gray-300 font-semibold text-sm sm:text-base mb-2">
+
+    <label class="text-gray-300 font-semibold text-base mb-2 max-sm:text-sm">
         Enter Prompt / Code
     </label>
 
@@ -86,44 +90,51 @@
         name="prompt"
         rows="6"
         placeholder="Write prompt or paste code..."
-        class="w-full p-3 sm:p-5 rounded-xl
+        class="w-full p-5 rounded-xl
         bg-gray-900 text-white border border-cyan-500
-        text-sm sm:text-base">
+        text-base max-sm:p-3 max-sm:text-sm">
 
     </textarea>
+
   </div>
 
-  <!-- BUTTONS (MOBILE STACKED STYLE) -->
-  <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+  <!-- BUTTONS -->
+  <div class="flex gap-4 max-sm:flex-col max-sm:gap-3">
 
     <button type="submit" name="action" value="generate"
-        class="w-full sm:w-auto flex items-center justify-center gap-3
+        class="flex items-center justify-center gap-3
         bg-cyan-500/20 hover:bg-cyan-500/30
         border border-cyan-500/40
-        px-6 py-3 rounded-xl font-semibold transition">
+        px-6 py-3 rounded-xl font-semibold transition
+        max-sm:w-full">
 
         <i class="ri-code-s-slash-line text-xl"></i>
         Generate Code
+
     </button>
 
     <button type="submit" name="action" value="explain"
-        class="w-full sm:w-auto flex items-center justify-center gap-3
+        class="flex items-center justify-center gap-3
         bg-purple-500/20 hover:bg-purple-500/30
         border border-purple-500/40
-        px-6 py-3 rounded-xl font-semibold transition">
+        px-6 py-3 rounded-xl font-semibold transition
+        max-sm:w-full">
 
         <i class="ri-brain-line text-xl"></i>
         Explain Code
+
     </button>
 
     <button type="submit" name="action" value="debug"
-        class="w-full sm:w-auto flex items-center justify-center gap-3
+        class="flex items-center justify-center gap-3
         bg-red-500/20 hover:bg-red-500/30
         border border-red-500/40
-        px-6 py-3 rounded-xl font-semibold transition">
+        px-6 py-3 rounded-xl font-semibold transition
+        max-sm:w-full">
 
         <i class="ri-bug-line text-xl"></i>
         Debug Code
+
     </button>
 
   </div>
@@ -135,8 +146,9 @@
 
 <div class="mt-10 w-full max-w-4xl mx-auto">
 
-<div class="bg-gray-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8
-border border-cyan-500/30 shadow-2xl">
+<div class="bg-gray-900 rounded-3xl p-8
+border border-cyan-500/30 shadow-2xl
+max-sm:rounded-2xl max-sm:p-5">
 
     <!-- HEADER -->
     <div class="flex justify-between items-center mb-6">
@@ -149,7 +161,7 @@ border border-cyan-500/30 shadow-2xl">
 
             <div>
 
-                <h2 class="text-xl sm:text-2xl font-bold text-cyan-400">
+                <h2 class="text-2xl font-bold text-cyan-400 max-sm:text-xl">
                     AI Response
                 </h2>
 
@@ -164,8 +176,9 @@ border border-cyan-500/30 shadow-2xl">
     </div>
 
     <!-- CODE BOX -->
-    <div class="bg-black w-full p-4 sm:p-6 rounded-2xl
-    overflow-x-auto border border-gray-700">
+    <div class="bg-black w-full p-6 rounded-2xl
+    overflow-x-auto border border-gray-700
+    max-sm:p-4">
 
 <pre class="whitespace-pre w-full">
 <code id="code" class="language-python">
@@ -175,34 +188,40 @@ border border-cyan-500/30 shadow-2xl">
 
     </div>
 
-    <!-- ACTION BUTTONS (STACKED ON MOBILE) -->
-    <div class="flex flex-col sm:flex-row gap-3 mt-6">
+    <!-- ACTION BUTTONS -->
+    <div class="flex gap-3 mt-6 max-sm:flex-col">
 
         <button onclick="copyCode()"
-            class="w-full sm:w-auto flex items-center justify-center gap-2
+            class="flex items-center justify-center gap-2
             bg-cyan-500/20 hover:bg-cyan-500/30
-            px-5 py-3 rounded-xl transition">
+            px-5 py-3 rounded-xl transition
+            max-sm:w-full">
 
             <i class="ri-file-copy-line"></i>
             Copy
+
         </button>
 
         <button
-            class="w-full sm:w-auto flex items-center justify-center gap-2
+            class="flex items-center justify-center gap-2
             bg-yellow-500/20 hover:bg-yellow-500/30
-            px-5 py-3 rounded-xl transition">
+            px-5 py-3 rounded-xl transition
+            max-sm:w-full">
 
             <i class="ri-star-line"></i>
             Favorite
+
         </button>
 
         <button
-            class="w-full sm:w-auto flex items-center justify-center gap-2
+            class="flex items-center justify-center gap-2
             bg-purple-500/20 hover:bg-purple-500/30
-            px-5 py-3 rounded-xl transition">
+            px-5 py-3 rounded-xl transition
+            max-sm:w-full">
 
             <i class="ri-brain-line"></i>
             Explain
+
         </button>
 
     </div>

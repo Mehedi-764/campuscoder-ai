@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="max-w-6xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-10">
+
+        <h1 class="text-5xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-transparent bg-clip-text mb-3">
+            {{ technology }}
+        </h1>
+
+        <p class="text-2xl font-semibold text-cyan-300">
+            {{ module_name }}
+        </p>
+
+    </div>
+
+    <!-- Lesson -->
+    <div class="glass rounded-3xl p-6 mb-6">
+
+        <h2 class="text-3xl font-bold text-cyan-400 mb-6">
+
+            Lesson
+
+        </h2>
+
+        <div class="prose prose-invert max-w-none text-left text-gray-300 whitespace-pre-wrap leading-9 text-lg">
+
+            {{ lesson|linebreaks }}
+
+        </div>
+
+    </div>
+    
+    <!-- Code -->
+    <div class="glass rounded-3xl p-8 mb-8">
+
+        <h2 class="text-3xl font-bold text-green-400 mb-6">
+
+            Example Code
+
+        </h2>
+
+        <pre class="bg-[#0f172a] rounded-2xl p-6 overflow-auto text-green-300">
+<code>{{ code }}</code>
+        </pre>
+
+    </div>
+
+    <!-- Practice -->
+    <div class="glass rounded-3xl p-8 mb-8">
+
+        <h2 class="text-3xl font-bold text-yellow-400 mb-6">
+
+            Mini Practice
+
+        </h2>
+
+        <div class="text-gray-300 whitespace-pre-wrap leading-8 text-lg">
+
+            {{ practice }}
+
+        </div>
+
+    </div>
+
+    <!-- Back -->
+    <div class="text-center">
+
+        <a href="{% url 'roadmap' %}"
+
+           class="inline-flex items-center bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 rounded-2xl font-bold hover:scale-105 transition">
+
+            <i class="ri-arrow-left-line mr-2"></i>
+
+            Back to Roadmap
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="max-w-md mx-auto mt-24">
+
+    <div class="glass rounded-3xl p-8">
+
+        <h1 class="text-4xl font-black text-cyan-400 mb-4">
+
+            Verify OTP
+
+        </h1>
+
+        <p class="text-gray-400 mb-8">
+
+            Enter the 6-digit code sent to your university email.
+
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <input
+
+                type="text"
+
+                name="otp"
+
+                maxlength="6"
+
+                placeholder="Enter OTP"
+
+                class="w-full p-4 rounded-2xl bg-[#141b2d] border border-cyan-500 text-white mb-6"
+
+                required
+
+            >
+
+            <button
+
+                class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 py-4 rounded-2xl font-bold"
+
+            >
+
+                Verify OTP
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

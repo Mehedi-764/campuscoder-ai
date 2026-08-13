@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-10">
+
+        <h1 class="text-5xl font-black bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 text-transparent bg-clip-text mb-3">
+            AI Learning Roadmap
+        </h1>
+
+        <p class="text-gray-400 text-lg">
+            Learn any programming language or technology through structured learning modules.
+        </p>
+
+    </div>
+
+    <!-- Search -->
+    <div class="glass rounded-3xl p-8 mb-10">
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="flex flex-col lg:flex-row gap-5">
+
+                <input
+                    type="text"
+                    name="technology"
+                    value="{{ technology }}"
+                    placeholder="Example: Python, Django, Java, React"
+                    class="flex-1 bg-[#141b2d] border border-cyan-500 rounded-2xl px-6 py-4 text-white text-lg outline-none focus:ring-2 focus:ring-cyan-400">
+
+                <button
+                    class="bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 rounded-2xl font-bold hover:scale-105 duration-300">
+
+                    <i class="ri-search-line"></i>
+                    Generate Roadmap
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Roadmap -->
+
+    <div class="glass rounded-3xl p-8">
+
+        <h2 class="text-4xl font-black text-cyan-400 mb-10">
+
+            {{ technology }} Learning Roadmap
+
+        </h2>
+
+<!-- Roadmap Modules -->
+<div class="grid gap-6">
+
+    {% for module in modules %}
+
+    <div class="glass rounded-3xl p-6 border border-cyan-500/20 hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300">
+
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+
+            <!-- Left -->
+            <div class="flex items-center gap-5">
+
+                <!-- Module Number -->
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-xl font-bold shadow-lg">
+
+                    {{ forloop.counter }}
+
+                </div>
+
+                <!-- Module Title -->
+                <div>
+
+                    <p class="text-sm text-gray-400">
+                        Module {{ forloop.counter }}
+                    </p>
+
+                    <h3 class="text-xl lg:text-2xl font-bold text-cyan-300">
+
+                        {{ module|title }}
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+            <!-- Right -->
+            <button>
+                <a href="{% url 'module' %}?technology={{ technology }}&module={{ module|urlencode }}" class="bg-gradient-to-r from-cyan-500 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-105 transition duration-300 inline-flex items-center">
+
+                   <i class="ri-play-circle-fill mr-2"></i>
+
+                    Start Learning
+
+                </a>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+        <!-- Important Questions -->
+<div class="mt-12">
+
+    <div class="flex items-center gap-3 mb-8">
+
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center shadow-lg">
+
+            <i class="ri-question-answer-fill text-2xl text-white"></i>
+
+        </div>
+
+        <div>
+
+            <h2 class="text-3xl font-black text-yellow-400">
+                Important Interview & Exam Questions
+            </h2>
+
+            <p class="text-gray-400">
+                Most important questions to prepare before exams and interviews.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="glass rounded-3xl p-8 border border-yellow-500/20">
+
+        <div class="space-y-4">
+
+    {% for question in question_list %}
+
+    <div class="flex items-start gap-4 p-4 rounded-2xl bg-white/5 hover:bg-yellow-500/10 transition duration-300">
+
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center font-bold text-black flex-shrink-0">
+
+            {{ forloop.counter }}
+
+        </div>
+
+        <p class="text-lg text-gray-200 leading-relaxed">
+
+            {{ question }}
+
+        </p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+    </div>
+
+</div>
+
+
+{% endblock %}
+

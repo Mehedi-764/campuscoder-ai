@@ -8,6 +8,13 @@ from .models import AIQuery, Activity
 from django.db.models.functions import TruncDate
 from django.conf import settings
 from users.models import AIQuery
+from django.contrib.auth.decorators import login_required
+import re
+import random
+import requests
+from django.contrib import messages
+from django.conf import settings
+
 
 
 client = Groq(
@@ -203,15 +210,11 @@ def register(request):
         email = request.POST['email']
         password = request.POST['password']
 
-        allowed_domains = ['manarat.ac.bd']
+        if not email.endswith("@manarat.ac.bd"):
 
-        email_domain = email.split('@')[-1]
+            messages.error(request,"Only @manarat.ac.bd email is allowed.")
 
-        if email_domain not in allowed_domains:
-
-            return render(request, 'users/register.html', {
-                'error': 'Only university email allowed!'
-            })
+            return redirect("register")
 
         # Check existing username
 
@@ -220,17 +223,35 @@ def register(request):
          return render(request, 'users/register.html', {
          'error': 'Username already exists!'})
 
-        # Create user
-        user = User.objects.create_user(
-          username=username,
-          email=email,
-          password=password)
+        # Generate OTP
+        otp = str(random.randint(100000, 999999))
 
-        # Admin approval required
-        user.is_active = True
-        user.save()
+        # Save registration data in session
+        request.session["reg_username"] = username
+        request.session["reg_email"] = email
+        request.session["reg_password"] = password
+        request.session["otp"] = otp
 
-        return redirect('login')
+        # Send OTP using Brevo
+        url = "https://api.brevo.com/v3/smtp/email"
+
+        headers = { "accept": "application/json","api-key": settings.BREVO_API_KEY,"content-type": "application/json"}
+
+        data = {
+            "sender": {
+            "name": settings.BREVO_SENDER_NAME,
+            "email": settings.BREVO_SENDER_EMAIL},
+            "to": [
+                {
+                    "email": email
+                }],
+            "subject": "CampusCoder AI OTP Verification",
+            "htmlContent": f"""<h2>CampusCoder AI</h2><p>Your OTP is:</p><h1>{otp}</h1> <p>This OTP is valid for 5 minutes.</p>
+             """}
+
+        requests.post(url, headers=headers, json=data)
+
+        return redirect("verify_otp")
 
     return render(request, 'users/register.html')
 
@@ -427,3 +448,271 @@ def logout_view(request):
     logout(request)
 
     return redirect('login')
+
+
+@login_required
+def roadmap(request):
+
+    technology = ""
+    modules = []
+    question_list = []
+
+    if request.method == "POST":
+
+        technology = request.POST.get("technology", "").strip()
+
+        prompt = f"""
+You are an expert programming instructor.
+
+Create a complete learning roadmap for {technology}.
+
+Rules:
+
+- Exactly 12 modules.
+- Only write module titles.
+- Do NOT explain anything.
+- Format MUST be exactly like this.
+
+Module 1: Introduction
+
+Module 2: Installation
+
+Module 3: Variables
+
+Module 4: Data Types
+
+...
+
+Module 12: Final Project
+
+After Module 12 write:
+
+IMPORTANT QUESTIONS
+
+Then write exactly 20 important interview or exam questions.
+
+Do not write anything else.
+"""
+
+        try:
+
+            chat_completion = client.chat.completions.create(
+
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+
+                model="llama-3.3-70b-versatile",
+
+            )
+
+            result = chat_completion.choices[0].message.content
+
+            # Split Roadmap & Questions
+            if "IMPORTANT QUESTIONS" in result:
+
+                roadmap_text, question_text = result.split(
+                    "IMPORTANT QUESTIONS",
+                    1
+                )
+
+            else:
+
+                roadmap_text = result
+                question_text = ""
+
+            # Extract Modules
+            pattern = r"Module\s*\d+\s*:\s*(.+)"
+
+            matches = re.findall(
+                pattern,
+                roadmap_text,
+                re.IGNORECASE
+            )
+
+            modules = []
+
+            for item in matches:
+
+                modules.append(item.strip())
+
+            # Questions
+            question_list = []
+
+            for line in question_text.split("\n"):
+
+                line = line.strip()
+
+                if line:
+
+                    question_list.append(line)
+
+        except Exception as e:
+
+            modules = []
+
+            question_list = []
+
+            print(e)
+
+    return render(
+
+        request,
+
+        "users/roadmap.html",
+
+        {
+
+            "technology": technology,
+
+            "modules": modules,
+
+            "question_list": question_list,
+
+        }
+
+    )
+
+@login_required
+def module(request):
+
+    technology = request.GET.get("technology", "Python")
+    module_name = request.GET.get("module", "")
+
+    lesson = ""
+    code = ""
+    practice = ""
+
+    prompt = f"""
+You are an expert programming teacher.
+
+Technology: {technology}
+
+Module:
+{module_name}
+
+Create the lesson in this exact format.
+
+LESSON
+
+Explain the topic in beginner-friendly language.
+
+====================
+
+CODE
+
+Provide one simple code example.
+
+====================
+
+PRACTICE
+
+Give one beginner practice task.
+
+Do not write anything else.
+"""
+
+    try:
+
+        chat_completion = client.chat.completions.create(
+
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+
+            model="llama-3.3-70b-versatile",
+
+        )
+
+        result = chat_completion.choices[0].message.content
+
+        if "====================" in result:
+
+            parts = result.split("====================")
+
+            lesson = parts[0].replace("LESSON", "").strip()
+
+            if len(parts) > 1:
+                code = parts[1].replace("CODE", "").strip()
+
+            if len(parts) > 2:
+                practice = parts[2].replace("PRACTICE", "").strip()
+
+        else:
+
+            lesson = result
+
+    except Exception as e:
+
+        lesson = str(e)
+
+   
+
+    return render(
+
+        request,
+
+        "users/module.html",
+
+        {
+
+            "technology": technology,
+            "module_name": module_name,
+            "module_no": 1,
+            "lesson": lesson,
+            "code": code,
+            "practice": practice,
+        
+
+        }
+
+    )
+
+
+
+def verify_otp(request):
+
+    if request.method == "POST":
+
+        user_otp = request.POST.get("otp")
+
+        session_otp = request.session.get("otp")
+
+        if user_otp == session_otp:
+
+            User.objects.create_user(
+
+                username=request.session["reg_username"],
+
+                email=request.session["reg_email"],
+
+                password=request.session["reg_password"]
+
+            )
+
+            request.session.flush()
+
+            messages.success(
+                request,
+                "Registration completed successfully."
+            )
+
+            return redirect("login")
+
+        else:
+
+            messages.error(
+                request,
+                "Invalid OTP."
+            )
+
+    return render(
+        request,
+        "users/verify_otp.html"
+    )

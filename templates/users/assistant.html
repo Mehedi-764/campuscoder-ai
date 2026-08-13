@@ -17,14 +17,14 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
 </head>
 
-<body class="bg-black text-white min-h-screen p-6 max-sm:p-4">
+<body class="bg-black text-white min-h-screen p-10 max-lg:p-6 max-sm:p-4">
 
 {% load static %}
 
 <!-- HEADER -->
-<div class="flex items-center justify-between mb-10 gap-6 max-sm:flex-col">
+<div class="flex items-center justify-between mb-10 gap-6 max-lg:flex-col">
 
-    <div class="flex items-center gap-5 text-left max-sm:flex-col max-sm:text-center">
+    <div class="flex items-center gap-5 text-left max-lg:flex-col max-lg:text-center">
 
         <img
         src="{% static 'images/logo.png' %}"
@@ -67,7 +67,7 @@
         name="language"
         class="w-full p-4 rounded-xl
         bg-gray-900 text-white border border-cyan-500
-        max-sm:p-3 max-sm:text-sm">
+        text-base max-sm:p-3 max-sm:text-sm">
 
         <option>Python</option>
         <option>C</option>
@@ -99,40 +99,52 @@
   </div>
 
   <!-- BUTTONS -->
-  <div class="flex gap-4 max-sm:flex-col max-sm:gap-3">
+  <div class="flex gap-4 max-lg:flex-col max-lg:gap-3">
 
-    <button type="submit" name="action" value="generate"
+    <button
+        type="submit"
+        name="action"
+        value="generate"
         class="flex items-center justify-center gap-3
         bg-cyan-500/20 hover:bg-cyan-500/30
         border border-cyan-500/40
         px-6 py-3 rounded-xl font-semibold transition
-        max-sm:w-full">
+        max-lg:w-full">
 
         <i class="ri-code-s-slash-line text-xl"></i>
+
         Generate Code
 
     </button>
 
-    <button type="submit" name="action" value="explain"
+    <button
+        type="submit"
+        name="action"
+        value="explain"
         class="flex items-center justify-center gap-3
         bg-purple-500/20 hover:bg-purple-500/30
         border border-purple-500/40
         px-6 py-3 rounded-xl font-semibold transition
-        max-sm:w-full">
+        max-lg:w-full">
 
         <i class="ri-brain-line text-xl"></i>
+
         Explain Code
 
     </button>
 
-    <button type="submit" name="action" value="debug"
+    <button
+        type="submit"
+        name="action"
+        value="debug"
         class="flex items-center justify-center gap-3
         bg-red-500/20 hover:bg-red-500/30
         border border-red-500/40
         px-6 py-3 rounded-xl font-semibold transition
-        max-sm:w-full">
+        max-lg:w-full">
 
         <i class="ri-bug-line text-xl"></i>
+
         Debug Code
 
     </button>
@@ -140,6 +152,7 @@
   </div>
 
 </form>
+
 
 <!-- RESPONSE -->
 {% if response %}
@@ -156,7 +169,9 @@ max-sm:rounded-2xl max-sm:p-5">
         <div class="flex items-center gap-3">
 
             <div class="bg-cyan-500/20 p-3 rounded-xl">
+
                 <i class="ri-robot-2-line text-cyan-400 text-2xl"></i>
+
             </div>
 
             <div>
@@ -175,12 +190,13 @@ max-sm:rounded-2xl max-sm:p-5">
 
     </div>
 
+
     <!-- CODE BOX -->
     <div class="bg-black w-full p-6 rounded-2xl
     overflow-x-auto border border-gray-700
     max-sm:p-4">
 
-<pre class="whitespace-pre w-full">
+        <pre class="whitespace-pre w-full">
 <code id="code" class="language-python">
 {{ response }}
 </code>
@@ -188,38 +204,45 @@ max-sm:rounded-2xl max-sm:p-5">
 
     </div>
 
-    <!-- ACTION BUTTONS -->
-    <div class="flex gap-3 mt-6 max-sm:flex-col">
 
-        <button onclick="copyCode()"
+    <!-- ACTION BUTTONS -->
+    <div class="flex gap-3 mt-6 max-lg:flex-col">
+
+        <button
+            onclick="copyCode()"
             class="flex items-center justify-center gap-2
             bg-cyan-500/20 hover:bg-cyan-500/30
             px-5 py-3 rounded-xl transition
-            max-sm:w-full">
+            max-lg:w-full">
 
             <i class="ri-file-copy-line"></i>
+
             Copy
 
         </button>
+
 
         <button
             class="flex items-center justify-center gap-2
             bg-yellow-500/20 hover:bg-yellow-500/30
             px-5 py-3 rounded-xl transition
-            max-sm:w-full">
+            max-lg:w-full">
 
             <i class="ri-star-line"></i>
+
             Favorite
 
         </button>
+
 
         <button
             class="flex items-center justify-center gap-2
             bg-purple-500/20 hover:bg-purple-500/30
             px-5 py-3 rounded-xl transition
-            max-sm:w-full">
+            max-lg:w-full">
 
             <i class="ri-brain-line"></i>
+
             Explain
 
         </button>
@@ -232,24 +255,40 @@ max-sm:rounded-2xl max-sm:p-5">
 
 {% endif %}
 
+
 <!-- COPY -->
 <script>
+
 function copyCode(){
-    let code=document.getElementById("code").innerText;
+
+    let code = document.getElementById("code").innerText;
+
     navigator.clipboard.writeText(code);
+
 }
+
 </script>
+
 
 <!-- PRISM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
+
 <script>
+
 Prism.highlightAll();
+
 </script>
 
+
 </body>
+
 </html>

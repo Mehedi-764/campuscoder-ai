@@ -18,7 +18,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
 </head>
 
-<body class="bg-black text-white min-h-screen p-6 sm:p-10">
+<body class="bg-black text-white min-h-screen p-6 sm:p-10 overflow-x-hidden">
 
 {% load static %}
 
@@ -52,7 +52,7 @@
 
 </div>
 
-<!-- FORM (WIDTH FIXED TO FULL WIDTH) -->
+<!-- FORM (FORCE FULL WIDTH ACROSS ALL PARENTS) -->
 <form method="POST" class="space-y-6 w-full">
 
   {% csrf_token %}

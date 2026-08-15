@@ -14,6 +14,9 @@ from pathlib import Path
 from decouple import config
 import os
 
+BREVO_API_KEY = os.environ.get("BREVO_API_KEY")
+BREVO_SENDER_EMAIL = os.environ.get("BREVO_SENDER_EMAIL")
+BREVO_SENDER_NAME = os.environ.get("BREVO_SENDER_NAME")
 
 GROQ_API_KEY = config('GROQ_API_KEY')
 

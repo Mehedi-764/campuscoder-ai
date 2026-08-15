@@ -12,7 +12,8 @@ from django.contrib.auth.decorators import login_required
 import re
 import random
 import requests
-
+from django.contrib import messages
+from django.conf import settings
 
 
 

@@ -14,6 +14,10 @@ import random
 import requests
 from django.contrib import messages
 from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 
 
@@ -677,42 +681,43 @@ Do not write anything else.
 
 
 def verify_otp(request):
-
     if request.method == "POST":
-
-        user_otp = request.POST.get("otp")
-
+        user_otp = request.POST.get("otp", "").strip()
         session_otp = request.session.get("otp")
 
-        if user_otp == session_otp:
+        # ১. Session expired বা data missing থাকলে safe return
+        reg_username = request.session.get("reg_username")
+        reg_email = request.session.get("reg_email")
+        reg_password = request.session.get("reg_password")
 
-            User.objects.create_user(
+        if not all([reg_username, reg_email, reg_password, session_otp]):
+            messages.error(request, "Session expired or invalid registration flow. Please register again.")
+            return redirect("register") # আপনার Registration URL-এর নাম দিন
 
-                username=request.session["reg_username"],
+        # ২. String comparisons নিশ্চিত করা
+        if str(user_otp) == str(session_otp):
+            try:
+                # User Create করা
+                User.objects.create_user(
+                    username=reg_username,
+                    email=reg_email,
+                    password=reg_password
+                )
+                
+                # Success হলে Session Clean করা
+                request.session.flush()
+                messages.success(request, "Registration completed successfully.")
+                return redirect("login")
 
-                email=request.session["reg_email"],
-
-                password=request.session["reg_password"]
-
-            )
-
-            request.session.flush()
-
-            messages.success(
-                request,
-                "Registration completed successfully."
-            )
-
-            return redirect("login")
-
+            except IntegrityError:
+                # যদি Username বা Email আগে থেকেই Database-এ থাকে
+                messages.error(request, "User with this username or email already exists.")
+                return redirect("register")
+            except Exception as e:
+                # অন্য যেকোনো অপ্রত্যাশিত ভুলের জন্য Safe error message
+                messages.error(request, "An error occurred while creating your account.")
+                return redirect("verify_otp")
         else:
+            messages.error(request, "Invalid OTP. Please try again.")
 
-            messages.error(
-                request,
-                "Invalid OTP."
-            )
-
-    return render(
-        request,
-        "users/verify_otp.html"
-    )
+    return render(request, "users/verify_otp.html")

@@ -1,47 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Assistant</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+<title>AI Assistant</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
 
-    {% load static %}
-    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+{% load static %}
+<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
 </head>
 
-<body class="bg-black text-white min-h-screen p-10 max-lg:p-6 max-sm:p-4">
+<body class="bg-black text-white min-h-screen p-6 sm:p-10">
 
 {% load static %}
 
 <!-- HEADER -->
-<div class="flex items-center justify-between mb-10 gap-6 max-lg:flex-col">
+<div class="flex flex-col sm:flex-row items-center justify-between mb-10 gap-6">
 
-    <div class="flex items-center gap-5 text-left max-lg:flex-col max-lg:text-center">
+    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
 
         <img
         src="{% static 'images/logo.png' %}"
-        class="w-24 h-24 object-contain
+        class="w-20 sm:w-24 h-20 sm:h-24 object-contain
         drop-shadow-[0_0_20px_rgba(34,211,238,.4)]">
 
         <div>
 
-            <h1 class="text-4xl font-black
+            <h1 class="text-3xl sm:text-4xl font-black
             bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500
-            text-transparent bg-clip-text max-sm:text-3xl">
+            text-transparent bg-clip-text">
 
                 CampusCoder AI
 
             </h1>
 
-            <p class="text-gray-400 text-base max-sm:text-sm">
+            <p class="text-gray-400 text-sm sm:text-base">
                 Smart Coding Mentor for Students
             </p>
 
@@ -51,23 +52,21 @@
 
 </div>
 
-<!-- FORM -->
-<form method="POST" class="space-y-6 max-w-4xl mx-auto">
+<!-- FORM (WIDTH FIXED TO FULL WIDTH) -->
+<form method="POST" class="space-y-6 w-full">
 
   {% csrf_token %}
 
   <!-- LANGUAGE -->
   <div class="flex flex-col">
-
-    <label class="text-gray-300 font-semibold text-base mb-2 max-sm:text-sm">
+    <label class="text-gray-300 font-semibold text-sm sm:text-base mb-2">
         Programming Language
     </label>
 
     <select
         name="language"
-        class="w-full p-4 rounded-xl
-        bg-gray-900 text-white border border-cyan-500
-        text-base max-sm:p-3 max-sm:text-sm">
+        class="w-full p-3 sm:p-4 rounded-xl
+        bg-gray-900 text-white border border-cyan-500 text-sm sm:text-base">
 
         <option>Python</option>
         <option>C</option>
@@ -76,13 +75,11 @@
         <option>JavaScript</option>
 
     </select>
-
   </div>
 
   <!-- PROMPT -->
   <div class="flex flex-col">
-
-    <label class="text-gray-300 font-semibold text-base mb-2 max-sm:text-sm">
+    <label class="text-gray-300 font-semibold text-sm sm:text-base mb-2">
         Enter Prompt / Code
     </label>
 
@@ -90,78 +87,57 @@
         name="prompt"
         rows="6"
         placeholder="Write prompt or paste code..."
-        class="w-full p-5 rounded-xl
+        class="w-full p-3 sm:p-5 rounded-xl
         bg-gray-900 text-white border border-cyan-500
-        text-base max-sm:p-3 max-sm:text-sm">
+        text-sm sm:text-base">
 
     </textarea>
-
   </div>
 
-  <!-- BUTTONS -->
-  <div class="flex gap-4 max-lg:flex-col max-lg:gap-3">
+  <!-- BUTTONS (MOBILE STACKED STYLE) -->
+  <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
 
-    <button
-        type="submit"
-        name="action"
-        value="generate"
-        class="flex items-center justify-center gap-3
+    <button type="submit" name="action" value="generate"
+        class="w-full sm:w-auto flex items-center justify-center gap-3
         bg-cyan-500/20 hover:bg-cyan-500/30
         border border-cyan-500/40
-        px-6 py-3 rounded-xl font-semibold transition
-        max-lg:w-full">
+        px-6 py-3 rounded-xl font-semibold transition">
 
         <i class="ri-code-s-slash-line text-xl"></i>
-
         Generate Code
-
     </button>
 
-    <button
-        type="submit"
-        name="action"
-        value="explain"
-        class="flex items-center justify-center gap-3
+    <button type="submit" name="action" value="explain"
+        class="w-full sm:w-auto flex items-center justify-center gap-3
         bg-purple-500/20 hover:bg-purple-500/30
         border border-purple-500/40
-        px-6 py-3 rounded-xl font-semibold transition
-        max-lg:w-full">
+        px-6 py-3 rounded-xl font-semibold transition">
 
         <i class="ri-brain-line text-xl"></i>
-
         Explain Code
-
     </button>
 
-    <button
-        type="submit"
-        name="action"
-        value="debug"
-        class="flex items-center justify-center gap-3
+    <button type="submit" name="action" value="debug"
+        class="w-full sm:w-auto flex items-center justify-center gap-3
         bg-red-500/20 hover:bg-red-500/30
         border border-red-500/40
-        px-6 py-3 rounded-xl font-semibold transition
-        max-lg:w-full">
+        px-6 py-3 rounded-xl font-semibold transition">
 
         <i class="ri-bug-line text-xl"></i>
-
         Debug Code
-
     </button>
 
   </div>
 
 </form>
 
-
 <!-- RESPONSE -->
 {% if response %}
 
-<div class="mt-10 w-full max-w-4xl mx-auto">
+<div class="mt-10 w-full">
 
-<div class="bg-gray-900 rounded-3xl p-8
-border border-cyan-500/30 shadow-2xl
-max-sm:rounded-2xl max-sm:p-5">
+<div class="bg-gray-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8
+border border-cyan-500/30 shadow-2xl">
 
     <!-- HEADER -->
     <div class="flex justify-between items-center mb-6">
@@ -169,14 +145,12 @@ max-sm:rounded-2xl max-sm:p-5">
         <div class="flex items-center gap-3">
 
             <div class="bg-cyan-500/20 p-3 rounded-xl">
-
                 <i class="ri-robot-2-line text-cyan-400 text-2xl"></i>
-
             </div>
 
             <div>
 
-                <h2 class="text-2xl font-bold text-cyan-400 max-sm:text-xl">
+                <h2 class="text-xl sm:text-2xl font-bold text-cyan-400">
                     AI Response
                 </h2>
 
@@ -190,13 +164,11 @@ max-sm:rounded-2xl max-sm:p-5">
 
     </div>
 
-
     <!-- CODE BOX -->
-    <div class="bg-black w-full p-6 rounded-2xl
-    overflow-x-auto border border-gray-700
-    max-sm:p-4">
+    <div class="bg-black w-full p-4 sm:p-6 rounded-2xl
+    overflow-x-auto border border-gray-700">
 
-        <pre class="whitespace-pre w-full">
+<pre class="whitespace-pre w-full">
 <code id="code" class="language-python">
 {{ response }}
 </code>
@@ -204,47 +176,34 @@ max-sm:rounded-2xl max-sm:p-5">
 
     </div>
 
+    <!-- ACTION BUTTONS (STACKED ON MOBILE) -->
+    <div class="flex flex-col sm:flex-row gap-3 mt-6">
 
-    <!-- ACTION BUTTONS -->
-    <div class="flex gap-3 mt-6 max-lg:flex-col">
-
-        <button
-            onclick="copyCode()"
-            class="flex items-center justify-center gap-2
+        <button onclick="copyCode()"
+            class="w-full sm:w-auto flex items-center justify-center gap-2
             bg-cyan-500/20 hover:bg-cyan-500/30
-            px-5 py-3 rounded-xl transition
-            max-lg:w-full">
+            px-5 py-3 rounded-xl transition">
 
             <i class="ri-file-copy-line"></i>
-
             Copy
-
         </button>
 
-
         <button
-            class="flex items-center justify-center gap-2
+            class="w-full sm:w-auto flex items-center justify-center gap-2
             bg-yellow-500/20 hover:bg-yellow-500/30
-            px-5 py-3 rounded-xl transition
-            max-lg:w-full">
+            px-5 py-3 rounded-xl transition">
 
             <i class="ri-star-line"></i>
-
             Favorite
-
         </button>
 
-
         <button
-            class="flex items-center justify-center gap-2
+            class="w-full sm:w-auto flex items-center justify-center gap-2
             bg-purple-500/20 hover:bg-purple-500/30
-            px-5 py-3 rounded-xl transition
-            max-lg:w-full">
+            px-5 py-3 rounded-xl transition">
 
             <i class="ri-brain-line"></i>
-
             Explain
-
         </button>
 
     </div>
@@ -255,40 +214,24 @@ max-sm:rounded-2xl max-sm:p-5">
 
 {% endif %}
 
-
 <!-- COPY -->
 <script>
-
 function copyCode(){
-
-    let code = document.getElementById("code").innerText;
-
+    let code=document.getElementById("code").innerText;
     navigator.clipboard.writeText(code);
-
 }
-
 </script>
-
 
 <!-- PRISM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
-
 <script>
-
 Prism.highlightAll();
-
 </script>
 
-
 </body>
-
 </html>

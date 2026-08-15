@@ -2,7 +2,7 @@
 
 {% block content %}
 
-
+<!-- Header -->
 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 lg:mb-12 gap-6">
 
     <div>
@@ -25,7 +25,7 @@
 
 </div>
 
-
+<!-- Floating Statistics -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-10 lg:mb-12">
 
     <!-- Total Prompts -->
@@ -84,7 +84,7 @@
 
     </div>
 
-    #Most Used
+    <!-- Most Used -->
     <div class="glass glow rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 relative overflow-hidden">
 
         <div class="absolute top-0 left-0
@@ -114,7 +114,7 @@
 
 </div>
 
-#AI Learning Roadmap
+<!-- AI Learning Roadmap -->
 
 <div class="glass glow rounded-3xl p-8 mb-10 relative overflow-hidden">
 
@@ -187,23 +187,31 @@
 
 </div>
 
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 mb-10 lg:mb-12">
 
+    <!-- Live Prompt Analytics -->
+    <div class="glass rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8 lg:col-span-2 overflow-hidden h-[430px]">
 
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div class="mb-6 lg:mb-8">
 
-    
-    <div class="bg-[#0f1523]/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 lg:col-span-2 shadow-xl flex flex-col justify-between">
-        <div class="mb-4">
-            <h2 class="text-xl font-bold text-white tracking-tight">Live AI Usage</h2>
-            <p class="text-slate-400 text-xs mt-0.5">Real-time database activity metrics</p>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-cyan-400">
+                Live AI Usage
+            </h2>
+
+            <p class="text-gray-400 mt-2 text-sm sm:text-base">
+                Real database analytics
+            </p>
+
         </div>
 
-        <div class="w-full h-[280px] sm:h-[320px]">
-            <canvas id="usageChart"></canvas>
+        <div class="w-full h-[320px]">
+             <canvas id="usageChart"></canvas>
         </div>
+
     </div>
 
-    #Language Pie Chart
+    <!-- Language Pie Chart -->
     <div class="glass rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8">
 
         <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-400 mb-6 lg:mb-8">
@@ -218,7 +226,7 @@
 
 </div>
 
-#AI Timeline
+<!-- AI Timeline -->
 <div class="glass rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-8">
 
     <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-purple-400 mb-6 lg:mb-8">
@@ -259,7 +267,7 @@
 
 </div>
 
-
+<!-- Chart JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

@@ -1,24 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant</title>
 
-<title>AI Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
 
-<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
-{% load static %}
-<link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
 </head>
 
-<body class="bg-black text-white min-h-screen p-6 sm:p-10 overflow-x-hidden">
+<body class="bg-black text-white min-h-screen p-6 sm:p-10">
 
 {% load static %}
 
@@ -52,8 +51,8 @@
 
 </div>
 
-<!-- FORM (FORCE FULL WIDTH ACROSS ALL PARENTS) -->
-<form method="POST" class="space-y-6 w-full">
+<!-- FORM -->
+<form method="POST" class="space-y-6 max-w-4xl mx-auto">
 
   {% csrf_token %}
 
@@ -134,7 +133,7 @@
 <!-- RESPONSE -->
 {% if response %}
 
-<div class="mt-10 w-full">
+<div class="mt-10 w-full max-w-4xl mx-auto">
 
 <div class="bg-gray-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8
 border border-cyan-500/30 shadow-2xl">

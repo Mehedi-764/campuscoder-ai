@@ -33,10 +33,17 @@ CampusCoder AI is an intelligent coding assistant built for university students.
 * Interactive learning experience
 * Educational coding visualization
 
+### Roadmap Generator
+
+* Technology based roadmap
+* Module based learning
+* Important Interview & Exam Questions
+
 ### Authentication System
 
 * Secure registration and login
 * University email verification
+* OTP System
 * Personalized dashboard
 * User-specific chat history
 
@@ -47,6 +54,7 @@ CampusCoder AI is an intelligent coding assistant built for university students.
 * Django
 * Python
 * Groq API
+* Brevo API
 
 ### Frontend
 
@@ -146,19 +154,19 @@ Add screenshots of:
 
 * Login Page
   
-  <img width="1532" height="767" alt="Screenshot_2" src="https://github.com/user-attachments/assets/51a5d049-69e3-4883-9ee4-5797a7799bb9" />
+  <img width="1279" height="775" alt="login" src="https://github.com/user-attachments/assets/a794f809-5c85-4cde-8f6d-f0f7d9213732" />
 
 * Registration Page
   
-  <img width="1488" height="693" alt="Screenshot_3" src="https://github.com/user-attachments/assets/4dfd487b-dd02-4eed-938f-e4c09896a2c8" />
+  <img width="1215" height="785" alt="registration" src="https://github.com/user-attachments/assets/b02d8d6c-b9fc-4ffe-841f-dfad1cdf1728" />
 
 * AI Assistant
   
-  <img width="1871" height="748" alt="Screenshot_2" src="https://github.com/user-attachments/assets/7a45dba7-1382-481a-a035-e73c49710252" />
+  <img width="1710" height="834" alt="AI Assistant" src="https://github.com/user-attachments/assets/630b92ac-2bc4-42e0-89be-1d6b7bdce10d" />
 
 * Dashboard
 
-  <img width="1891" height="920" alt="Screenshot_11" src="https://github.com/user-attachments/assets/3e650385-58cc-4b06-b0d3-93944b4f12e6" />
+  <img width="1874" height="906" alt="dashboard" src="https://github.com/user-attachments/assets/ad39d868-2b09-4383-9ff3-2b656b62804d" />
 
 * Chat History
 
@@ -168,15 +176,25 @@ Add screenshots of:
 
   <img width="1424" height="900" alt="Screenshot_5" src="https://github.com/user-attachments/assets/04743185-365e-415e-9d84-934b154e8ef7" />
 
+* Roadmap Generator
+
+  <img width="1563" height="237" alt="roadmap" src="https://github.com/user-attachments/assets/e7ef8b53-790e-468b-9a8a-2279891483ca" />
+
+
 
 ## Future Improvements
 
-* AI Learning Path Generator
-* Real-Time Code Execution
-* Interview Preparation Module
-* DSA Visualizer
-* Team Collaboration
-* AI Project Recommendations
+* Advanced AI MCQ system 
+* AI-generated coding challenges 
+* Leaderboard 
+* Student achievement badges 
+* Certificate system 
+* Personalized AI learning recommendations 
+* More programming languages 
+* Advanced algorithm visualization 
+* Teacher/Admin analytics 
+* Mobile application
+
 
 ## Author
 

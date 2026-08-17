@@ -19,6 +19,7 @@ BREVO_SENDER_EMAIL = os.environ.get("BREVO_SENDER_EMAIL")
 BREVO_SENDER_NAME = os.environ.get("BREVO_SENDER_NAME")
 
 GROQ_API_KEY = config('GROQ_API_KEY')
+GROQ_MODEL = "openai/gpt-oss-120b"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

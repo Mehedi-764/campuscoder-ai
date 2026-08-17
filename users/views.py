@@ -56,9 +56,9 @@ def assistant(request):
         action = request.POST.get('action')
 
 
-        #
+        
         # SMART AI ACTION SYSTEM
-        #
+        
 
         if action == "generate":
 
@@ -154,7 +154,7 @@ Code:
 
                 ],
 
-                model="llama-3.3-70b-versatile",
+                model=settings.GROQ_MODEL,
 
             )
 
@@ -290,24 +290,24 @@ def dashboard(request):
 
         return redirect('login')
 
-    #
+    
     # Total Prompts
-    #
+    
     total_prompts = AIQuery.objects.filter(
         user=request.user
     ).count()
 
-    #
+    
     # Favorite Count
-    #
+    
     favorite_count = AIQuery.objects.filter(
         user=request.user,
         is_favorite=True
     ).count()
 
-    #
+    
     # Most Used Language
-    #
+    
     most_used = AIQuery.objects.filter(user=request.user).values('language').annotate(total=Count('language')).order_by('-total').first()
 
     most_used_language = (
@@ -316,18 +316,18 @@ def dashboard(request):
         else 'No Data'
     )
 
-    #
+    
     # Real-Time Activities
-    #
+    
     recent_activities = Activity.objects.filter(
 
         user=request.user
 
     ).order_by('-created_at')[:5]
 
-    #
+    
     # Weekly Prompt Analytics
-    #
+    
     weekly_data = AIQuery.objects.filter(
 
         user=request.user
@@ -342,9 +342,9 @@ def dashboard(request):
 
     ).order_by('day')
 
-    #
+    
     # Graph Labels + Data
-    #
+    
     graph_labels = []
 
     graph_data = []
@@ -359,9 +359,9 @@ def dashboard(request):
             item['total']
         )
 
-    #
+    
     # Language Analytics
-    #
+    
     language_data = AIQuery.objects.filter(
 
         user=request.user
@@ -386,9 +386,9 @@ def dashboard(request):
             item['total']
         )
 
-    #
+    
     # Final Render
-    #
+    
     return render(request, 'users/dashboard.html', {
 
         'total_prompts': total_prompts,
@@ -505,7 +505,7 @@ Do not write anything else.
                     }
                 ],
 
-                model="llama-3.3-70b-versatile",
+                model=settings.GROQ_MODEL,
 
             )
 
@@ -626,7 +626,7 @@ Do not write anything else.
                 }
             ],
 
-            model="llama-3.3-70b-versatile",
+            model=settings.GROQ_MODEL,
 
         )
 

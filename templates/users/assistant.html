@@ -5,232 +5,222 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Assistant</title>
+    <title>AI Assistant | CampusCoder</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet"/>
 
     {% load static %}
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css" rel="stylesheet"/>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        code, pre { 
+            font-family: 'JetBrains Mono', monospace !important; 
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-input {
+            background: rgba(8, 13, 26, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-input:focus {
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
+        }
+    </style>
 </head>
 
-<body class="bg-black text-white min-h-screen p-6 sm:p-10">
+<body class="bg-[#030712] text-slate-100 min-h-screen selection:bg-cyan-500/30">
 
-{% load static %}
+    <div class="max-w-7xl mx-auto space-y-8">
 
-<!-- HEADER -->
-<div class="flex flex-col sm:flex-row items-center justify-between mb-10 gap-6">
+        <!-- PAGE HEADER -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6 border-b border-slate-800/60">
+            <div class="flex items-center gap-4 sm:gap-5">
+                <div class="relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl blur opacity-30 group-hover:opacity-75 transition duration-300"></div>
+                    <div class="relative p-3 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center">
+                        <img src="{% static 'images/logo.png' %}" 
+                             alt="Logo"
+                             class="w-10 h-10 sm:w-12 sm:h-12 object-contain">
+                    </div>
+                </div>
 
-    <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
-
-        <img
-        src="{% static 'images/logo.png' %}"
-        class="w-20 sm:w-24 h-20 sm:h-24 object-contain
-        drop-shadow-[0_0_20px_rgba(34,211,238,.4)]">
-
-        <div>
-
-            <h1 class="text-3xl sm:text-4xl font-black
-            bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500
-            text-transparent bg-clip-text">
-
-                CampusCoder AI
-
-            </h1>
-
-            <p class="text-gray-400 text-sm sm:text-base">
-                Smart Coding Mentor for Students
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- FORM -->
-<form method="POST" class="space-y-6 max-w-4xl mx-auto">
-
-  {% csrf_token %}
-
-  <!-- LANGUAGE -->
-  <div class="flex flex-col">
-    <label class="text-gray-300 font-semibold text-sm sm:text-base mb-2">
-        Programming Language
-    </label>
-
-    <select
-        name="language"
-        class="w-full p-3 sm:p-4 rounded-xl
-        bg-gray-900 text-white border border-cyan-500 text-sm sm:text-base">
-
-        <option>Python</option>
-        <option>C</option>
-        <option>C++</option>
-        <option>Java</option>
-        <option>JavaScript</option>
-
-    </select>
-  </div>
-
-  <!-- PROMPT -->
-  <div class="flex flex-col">
-    <label class="text-gray-300 font-semibold text-sm sm:text-base mb-2">
-        Enter Prompt / Code
-    </label>
-
-    <textarea
-        name="prompt"
-        rows="6"
-        placeholder="Write prompt or paste code..."
-        class="w-full p-3 sm:p-5 rounded-xl
-        bg-gray-900 text-white border border-cyan-500
-        text-sm sm:text-base">
-
-    </textarea>
-  </div>
-
-  <!-- BUTTONS (MOBILE STACKED STYLE) -->
-  <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-
-    <button type="submit" name="action" value="generate"
-        class="w-full sm:w-auto flex items-center justify-center gap-3
-        bg-cyan-500/20 hover:bg-cyan-500/30
-        border border-cyan-500/40
-        px-6 py-3 rounded-xl font-semibold transition">
-
-        <i class="ri-code-s-slash-line text-xl"></i>
-        Generate Code
-    </button>
-
-    <button type="submit" name="action" value="explain"
-        class="w-full sm:w-auto flex items-center justify-center gap-3
-        bg-purple-500/20 hover:bg-purple-500/30
-        border border-purple-500/40
-        px-6 py-3 rounded-xl font-semibold transition">
-
-        <i class="ri-brain-line text-xl"></i>
-        Explain Code
-    </button>
-
-    <button type="submit" name="action" value="debug"
-        class="w-full sm:w-auto flex items-center justify-center gap-3
-        bg-red-500/20 hover:bg-red-500/30
-        border border-red-500/40
-        px-6 py-3 rounded-xl font-semibold transition">
-
-        <i class="ri-bug-line text-xl"></i>
-        Debug Code
-    </button>
-
-  </div>
-
-</form>
-
-<!-- RESPONSE -->
-{% if response %}
-
-<div class="mt-10 w-full max-w-4xl mx-auto">
-
-<div class="bg-gray-900 rounded-2xl sm:rounded-3xl p-5 sm:p-8
-border border-cyan-500/30 shadow-2xl">
-
-    <!-- HEADER -->
-    <div class="flex justify-between items-center mb-6">
-
-        <div class="flex items-center gap-3">
-
-            <div class="bg-cyan-500/20 p-3 rounded-xl">
-                <i class="ri-robot-2-line text-cyan-400 text-2xl"></i>
+                <div>
+                    <div class="flex items-center gap-3">
+                        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 text-transparent bg-clip-text">
+                            CampusCoder AI
+                        </h1>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                            <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+                            v2.0
+                        </span>
+                    </div>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-0.5">
+                        Smart Coding Mentor for Students
+                    </p>
+                </div>
             </div>
 
-            <div>
+            <div class="hidden sm:flex items-center gap-3 text-xs text-slate-400 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800">
+                <i class="ri-sparkles-line text-cyan-400 text-base"></i>
+                <span>Ready for Prompt Processing</span>
+            </div>
+        </div>
 
-                <h2 class="text-xl sm:text-2xl font-bold text-cyan-400">
-                    AI Response
-                </h2>
+        <!-- MAIN FORM -->
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
 
-                <p class="text-gray-400 text-sm">
-                    CampusCoder AI Assistant
-                </p>
+            <div class="glass-card rounded-2xl p-5 sm:p-8 space-y-6 shadow-xl">
+                
+                <!-- LANGUAGE SELECTOR -->
+                <div class="flex flex-col space-y-2.5">
+                    <label class="text-slate-200 font-medium text-sm flex items-center gap-2">
+                        <i class="ri-code-line text-cyan-400"></i>
+                        Select Programming Language
+                    </label>
+                    <div class="relative">
+                        <select name="language" 
+                                class="glass-input w-full p-3.5 pr-10 rounded-xl text-slate-100 text-sm focus:outline-none transition appearance-none cursor-pointer">
+                            <option value="Python" class="bg-slate-900">Python</option>
+                            <option value="C" class="bg-slate-900">C</option>
+                            <option value="C++" class="bg-slate-900">C++</option>
+                            <option value="Java" class="bg-slate-900">Java</option>
+                            <option value="JavaScript" class="bg-slate-900">JavaScript</option>
+                        </select>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                            <i class="ri-arrow-down-s-line text-lg"></i>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- PROMPT / CODE INPUT -->
+                <div class="flex flex-col space-y-2.5">
+                    <div class="flex justify-between items-center">
+                        <label class="text-slate-200 font-medium text-sm flex items-center gap-2">
+                            <i class="ri-terminal-box-line text-cyan-400"></i>
+                            Enter Prompt or Paste Code
+                        </label>
+                        <span class="text-xs text-slate-500 font-mono">Supports multi-line inputs</span>
+                    </div>
+                    <textarea name="prompt" 
+                              rows="8" 
+                              placeholder="e.g. Write a Python script for binary search, or paste code to debug..." 
+                              class="glass-input w-full p-4 rounded-xl text-slate-100 placeholder:text-slate-600 text-sm sm:text-base focus:outline-none transition resize-y font-mono leading-relaxed"></textarea>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                    
+                    <button type="submit" name="action" value="generate"
+                            class="group relative inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-cyan-300 bg-cyan-950/40 hover:bg-cyan-900/60 border border-cyan-500/30 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-cyan-950/30">
+                        <i class="ri-code-s-slash-line text-lg group-hover:rotate-12 transition-transform"></i>
+                        <span>Generate Code</span>
+                    </button>
+
+                    <button type="submit" name="action" value="explain"
+                            class="group relative inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-purple-300 bg-purple-950/40 hover:bg-purple-900/60 border border-purple-500/30 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-purple-950/30">
+                        <i class="ri-brain-line text-lg group-hover:scale-110 transition-transform"></i>
+                        <span>Explain Code</span>
+                    </button>
+
+                    <button type="submit" name="action" value="debug"
+                            class="group relative inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm text-rose-300 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-500/30 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-rose-950/30">
+                        <i class="ri-bug-line text-lg group-hover:rotate-12 transition-transform"></i>
+                        <span>Debug Code</span>
+                    </button>
+
+                </div>
+
+            </div>
+        </form>
+
+        <!-- RESPONSE DISPLAY -->
+        {% if response %}
+        <div class="glass-card rounded-2xl p-5 sm:p-8 space-y-6 shadow-2xl border-cyan-500/20">
+            
+            <!-- RESPONSE HEADER -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+                        <i class="ri-robot-2-line text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-100">AI Response</h2>
+                        <p class="text-xs text-slate-400">Generated by CampusCoder AI Engine</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800/50">
+                        Output Ready
+                    </span>
+                </div>
+            </div>
+
+            <!-- CODE CONTAINER -->
+            <div class="relative group rounded-xl overflow-hidden border border-slate-800 bg-[#080d1a]">
+                <pre class="p-5 overflow-x-auto m-0 leading-relaxed text-sm"><code id="code" class="language-python">{{ response }}</code></pre>
+            </div>
+
+            <!-- RESPONSE ACTIONS -->
+            <div x-data="{ copied: false }" class="flex flex-wrap items-center gap-3 pt-2">
+                <button @click="copyCode(); copied = true; setTimeout(() => copied = false, 2000)"
+                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs text-slate-200 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 transition active:scale-95">
+                    <i :class="copied ? 'ri-check-line text-green-400' : 'ri-file-copy-line text-slate-400'" class="text-sm"></i>
+                    <span x-text="copied ? 'Copied!' : 'Copy Code'"></span>
+                </button>
+
+                <button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs text-amber-300 bg-amber-950/30 hover:bg-amber-900/50 border border-amber-500/30 transition active:scale-95">
+                    <i class="ri-star-line text-sm"></i>
+                    <span>Favorite</span>
+                </button>
+
+                <button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-xs text-purple-300 bg-purple-950/30 hover:bg-purple-900/50 border border-purple-500/30 transition active:scale-95">
+                    <i class="ri-brain-line text-sm"></i>
+                    <span>Explain Response</span>
+                </button>
             </div>
 
         </div>
+        {% endif %}
 
     </div>
 
-    <!-- CODE BOX -->
-    <div class="bg-black w-full p-4 sm:p-6 rounded-2xl
-    overflow-x-auto border border-gray-700">
+    <!-- SCRIPTS -->
+    <script>
+        function copyCode(){
+            let code = document.getElementById("code").innerText;
+            navigator.clipboard.writeText(code);
+        }
+    </script>
 
-<pre class="whitespace-pre w-full">
-<code id="code" class="language-python">
-{{ response }}
-</code>
-</pre>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
 
-    </div>
-
-    <!-- ACTION BUTTONS (STACKED ON MOBILE) -->
-    <div class="flex flex-col sm:flex-row gap-3 mt-6">
-
-        <button onclick="copyCode()"
-            class="w-full sm:w-auto flex items-center justify-center gap-2
-            bg-cyan-500/20 hover:bg-cyan-500/30
-            px-5 py-3 rounded-xl transition">
-
-            <i class="ri-file-copy-line"></i>
-            Copy
-        </button>
-
-        <button
-            class="w-full sm:w-auto flex items-center justify-center gap-2
-            bg-yellow-500/20 hover:bg-yellow-500/30
-            px-5 py-3 rounded-xl transition">
-
-            <i class="ri-star-line"></i>
-            Favorite
-        </button>
-
-        <button
-            class="w-full sm:w-auto flex items-center justify-center gap-2
-            bg-purple-500/20 hover:bg-purple-500/30
-            px-5 py-3 rounded-xl transition">
-
-            <i class="ri-brain-line"></i>
-            Explain
-        </button>
-
-    </div>
-
-</div>
-
-</div>
-
-{% endif %}
-
-<!-- COPY -->
-<script>
-function copyCode(){
-    let code=document.getElementById("code").innerText;
-    navigator.clipboard.writeText(code);
-}
-</script>
-
-<!-- PRISM -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
-
-<script>
-Prism.highlightAll();
-</script>
+    <script>
+        Prism.highlightAll();
+    </script>
 
 </body>
 </html>

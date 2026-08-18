@@ -162,7 +162,7 @@ Add screenshots of:
 
 * AI Assistant
   
-  <img width="1710" height="834" alt="AI Assistant" src="https://github.com/user-attachments/assets/630b92ac-2bc4-42e0-89be-1d6b7bdce10d" />
+  <img width="1568" height="736" alt="Screenshot_9" src="https://github.com/user-attachments/assets/b27ee5ff-a730-4cff-9a5e-97de6ee91626" />
 
 * Dashboard
 
